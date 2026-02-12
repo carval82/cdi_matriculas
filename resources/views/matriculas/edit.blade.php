@@ -1,10 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Editar Matrícula: {{ $matricula->codigo }}</h2>
-    </x-slot>
+    <x-slot name="header">Editar Matrícula: {{ $matricula->codigo }}</x-slot>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form action="{{ route('matriculas.update', $matricula) }}" method="POST">
                     @csrf @method('PUT')

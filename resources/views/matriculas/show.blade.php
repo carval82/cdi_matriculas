@@ -1,16 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Matrícula {{ $matricula->codigo }}</h2>
-            <div class="flex gap-2">
-                <a href="{{ route('pagos.create', ['matricula_id' => $matricula->id]) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 transition">Registrar Pago</a>
-                <a href="{{ route('matriculas.edit', $matricula) }}" class="inline-flex items-center px-4 py-2 bg-amber-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-600 transition">Editar</a>
-            </div>
-        </div>
-    </x-slot>
+    <x-slot name="header">Matrícula {{ $matricula->codigo }}</x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="space-y-6">
+        <div class="flex justify-end gap-2">
+            <a href="{{ route('pagos.create', ['matricula_id' => $matricula->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 rounded-lg font-semibold text-sm text-white hover:bg-green-700 transition shadow-sm"><i class="fas fa-money-bill-wave"></i> Registrar Pago</a>
+            <a href="{{ route('matriculas.edit', $matricula) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 rounded-lg font-semibold text-sm text-white hover:bg-amber-600 transition shadow-sm"><i class="fas fa-edit"></i> Editar</a>
+        </div>
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif
@@ -109,6 +104,5 @@
                     <p class="text-gray-500 text-sm">Sin pagos registrados.</p>
                 @endif
             </div>
-        </div>
     </div>
 </x-app-layout>

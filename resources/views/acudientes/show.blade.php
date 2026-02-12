@@ -1,13 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $acudiente->nombre_completo }}</h2>
-            <a href="{{ route('acudientes.edit', $acudiente) }}" class="inline-flex items-center px-4 py-2 bg-amber-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-600 transition">Editar</a>
-        </div>
-    </x-slot>
+    <x-slot name="header">{{ $acudiente->nombre_completo }}</x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="space-y-6">
+        <div class="flex justify-end">
+            <a href="{{ route('acudientes.edit', $acudiente) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 rounded-lg font-semibold text-sm text-white hover:bg-amber-600 transition shadow-sm"><i class="fas fa-edit"></i> Editar</a>
+        </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-3">Datos del Acudiente</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -43,6 +40,5 @@
                     <p class="text-gray-500 text-sm">No tiene estudiantes asociados.</p>
                 @endif
             </div>
-        </div>
     </div>
 </x-app-layout>

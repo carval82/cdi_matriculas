@@ -1,15 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Estancias</h2>
-            <a href="{{ route('estancias.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 transition">
-                + Nueva Estancia
+    <x-slot name="header">Estancias</x-slot>
+
+    <div>
+        <div class="flex justify-between items-center mb-5">
+            <div></div>
+            <a href="{{ route('estancias.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-lg font-semibold text-sm text-white hover:bg-blue-700 transition shadow-sm">
+                <i class="fas fa-plus"></i> Nueva Estancia
             </a>
         </div>
-    </x-slot>
-
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif
@@ -87,6 +85,5 @@
                     </div>
                 @endforelse
             </div>
-        </div>
     </div>
 </x-app-layout>

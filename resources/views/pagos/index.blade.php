@@ -1,15 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pagos</h2>
-            <a href="{{ route('pagos.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 transition">
-                + Registrar Pago
-            </a>
-        </div>
-    </x-slot>
+    <x-slot name="header">Pagos</x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div>
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif
@@ -94,6 +86,5 @@
                 </div>
                 <div class="p-4">{{ $pagos->links() }}</div>
             </div>
-        </div>
     </div>
 </x-app-layout>

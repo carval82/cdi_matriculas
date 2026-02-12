@@ -1,18 +1,15 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Recibo {{ $pago->recibo }}</h2>
-            @if($pago->estado === 'pagado')
+    <x-slot name="header">Recibo {{ $pago->recibo }}</x-slot>
+
+    <div class="max-w-3xl mx-auto">
+        @if($pago->estado === 'pagado')
+            <div class="flex justify-end mb-4">
                 <form action="{{ route('pagos.destroy', $pago) }}" method="POST" onsubmit="return confirm('¿Anular este pago?')">
                     @csrf @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 transition">Anular Pago</button>
+                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 rounded-lg font-semibold text-sm text-white hover:bg-red-700 transition shadow-sm"><i class="fas fa-ban"></i> Anular Pago</button>
                 </form>
-            @endif
-        </div>
-    </x-slot>
-
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            </div>
+        @endif
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif
