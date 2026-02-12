@@ -7,6 +7,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\AcudienteController;
 use App\Http\Controllers\MatriculaController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\EstablecimientoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('pagos', PagoController::class);
 
     Route::get('/acudientes-buscar', [AcudienteController::class, 'buscar'])->name('acudientes.buscar');
+
+    Route::get('/pagos/{pago}/recibo', [PagoController::class, 'recibo'])->name('pagos.recibo');
+
+    Route::get('/establecimiento', [EstablecimientoController::class, 'edit'])->name('establecimiento.edit');
+    Route::put('/establecimiento', [EstablecimientoController::class, 'update'])->name('establecimiento.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

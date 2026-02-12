@@ -114,22 +114,34 @@
                     </div>
                 </div>
 
-                <!-- Desarrollador -->
+                <!-- Desarrollado con -->
                 <div class="border-t pt-6">
                     <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                        <i class="fas fa-laptop-code text-indigo-500"></i> Desarrollado por
+                        <i class="fas fa-laptop-code text-indigo-500"></i> Desarrollado con
                     </h2>
-                    <div class="mt-4 flex items-center gap-4 p-5 bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                            <i class="fas fa-rocket text-white text-xl"></i>
+                    <div class="mt-4 space-y-4">
+                        <div class="flex items-center gap-4 p-5 bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                                <i class="fas fa-rocket text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 text-lg">Anavalia Software</div>
+                                <div class="text-gray-500 text-sm">Soluciones tecnológicas a la medida</div>
+                                <div class="flex items-center gap-4 mt-2">
+                                    <a href="https://github.com/carval82" target="_blank" class="text-gray-400 hover:text-gray-700 transition">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="font-bold text-gray-800 text-lg">Anavalia Software</div>
-                            <div class="text-gray-500 text-sm">Soluciones tecnológicas a la medida</div>
-                            <div class="flex items-center gap-4 mt-2">
-                                <a href="https://github.com/carval82" target="_blank" class="text-gray-400 hover:text-gray-700 transition">
-                                    <i class="fab fa-github text-lg"></i>
-                                </a>
+                        <div class="flex items-center gap-4 p-5 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl">
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                                <i class="fas fa-wind text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 text-lg">Windsurf - Cascade AI</div>
+                                <div class="text-gray-500 text-sm">Asistente de programación con inteligencia artificial</div>
+                                <div class="text-xs text-gray-400 mt-1">Pair programming potenciado por IA para desarrollo ágil</div>
                             </div>
                         </div>
                     </div>
@@ -137,7 +149,7 @@
 
                 <!-- Footer -->
                 <div class="text-center text-sm text-gray-400 pt-4 border-t">
-                    &copy; {{ date('Y') }} CDI Matrículas. Todos los derechos reservados.
+                    &copy; {{ date('Y') }} CDI Matrículas — Anavalia Software + Cascade AI. Todos los derechos reservados.
                 </div>
             </div>
         </div>

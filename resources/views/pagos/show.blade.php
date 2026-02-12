@@ -2,14 +2,17 @@
     <x-slot name="header">Recibo {{ $pago->recibo }}</x-slot>
 
     <div class="max-w-3xl mx-auto">
-        @if($pago->estado === 'pagado')
-            <div class="flex justify-end mb-4">
+        <div class="flex justify-end gap-3 mb-4">
+            <a href="{{ route('pagos.recibo', $pago) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-lg font-semibold text-sm text-white hover:bg-blue-700 transition shadow-sm">
+                <i class="fas fa-print"></i> Imprimir Recibo
+            </a>
+            @if($pago->estado === 'pagado')
                 <form action="{{ route('pagos.destroy', $pago) }}" method="POST" onsubmit="return confirm('¿Anular este pago?')">
                     @csrf @method('DELETE')
                     <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 rounded-lg font-semibold text-sm text-white hover:bg-red-700 transition shadow-sm"><i class="fas fa-ban"></i> Anular Pago</button>
                 </form>
-            </div>
-        @endif
+            @endif
+        </div>
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif

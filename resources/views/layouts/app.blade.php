@@ -316,6 +316,9 @@
                 </a>
 
                 <div class="sidebar-section">Sistema</div>
+                <a href="{{ route('establecimiento.edit') }}" class="sidebar-link {{ request()->routeIs('establecimiento.*') ? 'active' : '' }}">
+                    <i class="fas fa-building"></i> Establecimiento
+                </a>
                 <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                     <i class="fas fa-user-cog"></i> Mi Perfil
                 </a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pago;
 use App\Models\Matricula;
+use App\Models\Establecimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -96,6 +97,14 @@ class PagoController extends Controller
         $pago->load(['estudiante', 'matricula.grupo']);
 
         return view('pagos.show', compact('pago'));
+    }
+
+    public function recibo(Pago $pago)
+    {
+        $pago->load(['estudiante', 'matricula.grupo', 'matricula.acudiente']);
+        $establecimiento = Establecimiento::datos();
+
+        return view('pagos.recibo', compact('pago', 'establecimiento'));
     }
 
     public function destroy(Pago $pago)
