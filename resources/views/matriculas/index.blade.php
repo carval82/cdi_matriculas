@@ -2,6 +2,13 @@
     <x-slot name="header">Matrículas</x-slot>
 
     <div>
+        <div class="flex justify-between items-center mb-5">
+            <div></div>
+            <a href="{{ route('matriculas.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-lg font-semibold text-sm text-white hover:bg-blue-700 transition shadow-sm">
+                <i class="fas fa-plus"></i> Nueva Matrícula
+            </a>
+        </div>
+
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
             @endif

@@ -13,8 +13,6 @@
                     <div><span class="text-gray-500">Jornada:</span><span class="font-medium ml-1">{{ ucfirst($grupo->jornada) }}</span></div>
                     <div><span class="text-gray-500">Edad:</span><span class="font-medium ml-1">{{ $grupo->edad_minima ?? '?' }} - {{ $grupo->edad_maxima ?? '?' }} meses</span></div>
                     <div><span class="text-gray-500">Capacidad:</span><span class="font-medium ml-1">{{ $grupo->capacidad }} cupos</span></div>
-                    <div><span class="text-gray-500">Matrícula:</span><span class="font-medium ml-1">${{ number_format($grupo->valor_matricula, 0, ',', '.') }}</span></div>
-                    <div><span class="text-gray-500">Pensión:</span><span class="font-medium ml-1">${{ number_format($grupo->valor_pension, 0, ',', '.') }}</span></div>
                 </div>
                 @if($grupo->descripcion)
                     <p class="mt-4 text-sm text-gray-600">{{ $grupo->descripcion }}</p>

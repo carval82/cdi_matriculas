@@ -103,9 +103,6 @@
                                     <div class="progress-fill" style="width:{{ min($porcentaje, 100) }}%;"></div>
                                 </div>
                             </div>
-                            <div style="margin-top:10px;font-size:0.8rem;opacity:0.7;">
-                                <i class="fas fa-tag"></i> ${{ number_format($grupo->valor_pension, 0, ',', '.') }}/mes
-                            </div>
                         </a>
                     @endforeach
                 </div>

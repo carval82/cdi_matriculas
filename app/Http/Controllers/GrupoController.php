@@ -27,8 +27,6 @@ class GrupoController extends Controller
             'nombre' => 'required|string|max:100',
             'codigo' => 'nullable|string|max:20|unique:grupos,codigo',
             'capacidad' => 'required|integer|min:1',
-            'valor_matricula' => 'required|numeric|min:0',
-            'valor_pension' => 'required|numeric|min:0',
         ]);
 
         Grupo::create($request->all());
@@ -55,8 +53,6 @@ class GrupoController extends Controller
             'nombre' => 'required|string|max:100',
             'codigo' => 'nullable|string|max:20|unique:grupos,codigo,' . $grupo->id,
             'capacidad' => 'required|integer|min:1',
-            'valor_matricula' => 'required|numeric|min:0',
-            'valor_pension' => 'required|numeric|min:0',
         ]);
 
         $grupo->update($request->all());

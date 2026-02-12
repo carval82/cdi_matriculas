@@ -42,14 +42,6 @@
                                     <span class="font-medium">{{ $grupo->edad_minima ?? '?' }} - {{ $grupo->edad_maxima ?? '?' }} meses</span>
                                 </div>
                                 @endif
-                                <div class="flex justify-between">
-                                    <span>Matrícula:</span>
-                                    <span class="font-medium">${{ number_format($grupo->valor_matricula, 0, ',', '.') }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Pensión:</span>
-                                    <span class="font-medium">${{ number_format($grupo->valor_pension, 0, ',', '.') }}</span>
-                                </div>
                             </div>
 
                             <!-- Barra de ocupación -->

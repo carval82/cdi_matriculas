@@ -39,18 +39,6 @@
     </div>
 
     <div>
-        <x-input-label for="valor_matricula" value="Valor Matrícula *" />
-        <x-text-input id="valor_matricula" name="valor_matricula" type="number" step="0.01" class="mt-1 block w-full" :value="old('valor_matricula', $e?->valor_matricula ?? 0)" required />
-        <x-input-error :messages="$errors->get('valor_matricula')" class="mt-2" />
-    </div>
-
-    <div>
-        <x-input-label for="valor_pension" value="Valor Pensión Mensual *" />
-        <x-text-input id="valor_pension" name="valor_pension" type="number" step="0.01" class="mt-1 block w-full" :value="old('valor_pension', $e?->valor_pension ?? 0)" required />
-        <x-input-error :messages="$errors->get('valor_pension')" class="mt-2" />
-    </div>
-
-    <div>
         <x-input-label for="orden" value="Orden" />
         <x-text-input id="orden" name="orden" type="number" class="mt-1 block w-full" :value="old('orden', $e?->orden ?? 0)" />
     </div>
