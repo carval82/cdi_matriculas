@@ -49,8 +49,8 @@
             </div>
             <div class="stat-card" style="border-left: 4px solid #a855f7;">
                 <div>
-                    <div class="stat-label">Estancias Activas</div>
-                    <div class="stat-value">{{ $stats['total_estancias'] }}</div>
+                    <div class="stat-label">Grupos Activos</div>
+                    <div class="stat-value">{{ $stats['total_grupos'] }}</div>
                 </div>
                 <div class="stat-icon" style="background:#faf5ff;color:#a855f7;"><i class="fas fa-school"></i></div>
             </div>
@@ -66,12 +66,12 @@
         <!-- Estancias con ocupación -->
         <div class="card">
             <div class="card-header">
-                <div class="card-title"><i class="fas fa-school" style="color:#a855f7;"></i> Estancias - Ocupación</div>
-                <a href="{{ route('estancias.create') }}" class="card-action" style="background:#faf5ff;color:#a855f7;">
+                <div class="card-title"><i class="fas fa-school" style="color:#a855f7;"></i> Grupos - Ocupación</div>
+                <a href="{{ route('grupos.create') }}" class="card-action" style="background:#faf5ff;color:#a855f7;">
                     <i class="fas fa-plus"></i> Nueva
                 </a>
             </div>
-            @if($estancias->count())
+            @if($grupos->count())
                 @php
                     $gradients = [
                         'linear-gradient(135deg, #3b82f6, #2563eb)',
@@ -83,16 +83,16 @@
                     ];
                 @endphp
                 <div class="grid-estancias">
-                    @foreach($estancias as $estancia)
+                    @foreach($grupos as $grupo)
                         @php
-                            $ocupados = $estancia->estudiantes_count;
-                            $capacidad = $estancia->capacidad;
+                            $ocupados = $grupo->estudiantes_count;
+                            $capacidad = $grupo->capacidad;
                             $porcentaje = $capacidad > 0 ? round(($ocupados / $capacidad) * 100) : 0;
                         @endphp
-                        <a href="{{ route('estancias.show', $estancia) }}" class="estancia-card" style="background:{{ $gradients[$loop->index % count($gradients)] }};">
+                        <a href="{{ route('grupos.show', $grupo) }}" class="estancia-card" style="background:{{ $gradients[$loop->index % count($gradients)] }};">
                             <div style="display:flex;justify-content:space-between;align-items:start;">
-                                <div style="font-weight:700;font-size:1.1rem;">{{ $estancia->nombre }}</div>
-                                <div style="background:rgba(255,255,255,0.2);border-radius:6px;padding:2px 8px;font-size:0.7rem;">{{ ucfirst($estancia->jornada) }}</div>
+                                <div style="font-weight:700;font-size:1.1rem;">{{ $grupo->nombre }}</div>
+                                <div style="background:rgba(255,255,255,0.2);border-radius:6px;padding:2px 8px;font-size:0.7rem;">{{ ucfirst($grupo->jornada) }}</div>
                             </div>
                             <div style="margin-top:16px;">
                                 <div style="display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.85;margin-bottom:6px;">
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                             <div style="margin-top:10px;font-size:0.8rem;opacity:0.7;">
-                                <i class="fas fa-tag"></i> ${{ number_format($estancia->valor_pension, 0, ',', '.') }}/mes
+                                <i class="fas fa-tag"></i> ${{ number_format($grupo->valor_pension, 0, ',', '.') }}/mes
                             </div>
                         </a>
                     @endforeach
@@ -112,9 +112,9 @@
             @else
                 <div class="empty-state">
                     <i class="fas fa-school"></i>
-                    <p>No hay estancias configuradas.</p>
-                    <a href="{{ route('estancias.create') }}" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:0.85rem;color:#a855f7;font-weight:600;text-decoration:none;">
-                        <i class="fas fa-plus"></i> Crear primera estancia
+                    <p>No hay grupos configurados.</p>
+                    <a href="{{ route('grupos.create') }}" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:0.85rem;color:#a855f7;font-weight:600;text-decoration:none;">
+                        <i class="fas fa-plus"></i> Crear primer grupo
                     </a>
                 </div>
             @endif
@@ -135,7 +135,7 @@
                             <div class="list-icon" style="background:#f0fdf4;color:#22c55e;"><i class="fas fa-user-graduate"></i></div>
                             <div>
                                 <div style="font-weight:600;font-size:0.85rem;color:#1e293b;">{{ $mat->estudiante->nombre_completo }}</div>
-                                <div style="font-size:0.75rem;color:#94a3b8;">{{ $mat->estancia->nombre }} &middot; {{ $mat->codigo }}</div>
+                                <div style="font-size:0.75rem;color:#94a3b8;">{{ $mat->grupo->nombre }} &middot; {{ $mat->codigo }}</div>
                             </div>
                         </div>
                         <span class="badge" style="{{ $mat->estado === 'activa' ? 'background:#dcfce7;color:#16a34a;' : 'background:#f1f5f9;color:#64748b;' }}">

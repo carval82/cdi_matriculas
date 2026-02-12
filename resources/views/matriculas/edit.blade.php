@@ -12,10 +12,10 @@
                         </div>
 
                         <div>
-                            <x-input-label for="estancia_id" value="Estancia *" />
-                            <select id="estancia_id" name="estancia_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                @foreach($estancias as $est)
-                                    <option value="{{ $est->id }}" {{ old('estancia_id', $matricula->estancia_id) == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
+                            <x-input-label for="grupo_id" value="Grupo *" />
+                            <select id="grupo_id" name="grupo_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                                @foreach($grupos as $est)
+                                    <option value="{{ $est->id }}" {{ old('grupo_id', $matricula->grupo_id) == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>

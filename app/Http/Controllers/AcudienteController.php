@@ -47,7 +47,7 @@ class AcudienteController extends Controller
 
     public function show(Acudiente $acudiente)
     {
-        $acudiente->load(['estudiantes.estancia']);
+        $acudiente->load(['estudiantes.grupo']);
 
         return view('acudientes.show', compact('acudiente'));
     }

@@ -297,8 +297,8 @@
                 </a>
 
                 <div class="sidebar-section">Gestión Académica</div>
-                <a href="{{ route('estancias.index') }}" class="sidebar-link {{ request()->routeIs('estancias.*') ? 'active' : '' }}">
-                    <i class="fas fa-school"></i> Estancias
+                <a href="{{ route('grupos.index') }}" class="sidebar-link {{ request()->routeIs('grupos.*') ? 'active' : '' }}">
+                    <i class="fas fa-school"></i> Grupos
                 </a>
                 <a href="{{ route('estudiantes.index') }}" class="sidebar-link {{ request()->routeIs('estudiantes.*') ? 'active' : '' }}">
                     <i class="fas fa-user-graduate"></i> Estudiantes

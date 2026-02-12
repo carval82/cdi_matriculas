@@ -10,7 +10,7 @@ class Matricula extends Model
     use HasFactory;
 
     protected $fillable = [
-        'codigo', 'estudiante_id', 'estancia_id', 'acudiente_id',
+        'codigo', 'estudiante_id', 'grupo_id', 'acudiente_id',
         'anio', 'periodo', 'fecha_matricula', 'valor_matricula',
         'valor_pension', 'descuento', 'tipo_descuento', 'estado',
         'jornada', 'observaciones', 'created_by',
@@ -28,9 +28,9 @@ class Matricula extends Model
         return $this->belongsTo(Estudiante::class);
     }
 
-    public function estancia()
+    public function grupo()
     {
-        return $this->belongsTo(Estancia::class);
+        return $this->belongsTo(Grupo::class);
     }
 
     public function acudiente()

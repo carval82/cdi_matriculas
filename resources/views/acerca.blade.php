@@ -31,7 +31,7 @@
                     </h2>
                     <p class="mt-3 text-gray-600 leading-relaxed">
                         <strong>CDI Matrículas</strong> es un sistema integral diseñado para la gestión académica y financiera 
-                        de Centros de Desarrollo Infantil. Permite administrar estancias, estudiantes, acudientes, 
+                        de Centros de Desarrollo Infantil. Permite administrar grupos, estudiantes, acudientes, 
                         matrículas y pagos de forma eficiente y organizada.
                     </p>
                 </div>
@@ -47,7 +47,7 @@
                                 <i class="fas fa-school text-white"></i>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-800">Estancias</div>
+                                <div class="font-semibold text-gray-800">Grupos</div>
                                 <div class="text-sm text-gray-500">Párvulos, Jardín, Pre-Jardín, Preescolar y más</div>
                             </div>
                         </div>

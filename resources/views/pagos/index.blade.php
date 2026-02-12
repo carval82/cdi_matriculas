@@ -46,7 +46,7 @@
                             <tr>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Recibo</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estudiante</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estancia</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Grupo</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Concepto</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mes</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
@@ -61,7 +61,7 @@
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-mono">{{ $pago->recibo }}</td>
                                     <td class="px-4 py-3 text-sm font-medium">{{ $pago->estudiante->nombre_completo }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $pago->matricula?->estancia?->nombre ?? '-' }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ $pago->matricula?->grupo?->nombre ?? '-' }}</td>
                                     <td class="px-4 py-3 text-sm">{{ ucfirst($pago->concepto) }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $pago->mes ? ucfirst($pago->mes) : '-' }}</td>
                                     <td class="px-4 py-3 text-sm font-medium">${{ number_format($pago->total, 0, ',', '.') }}</td>

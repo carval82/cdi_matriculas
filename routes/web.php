@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EstanciaController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\AcudienteController;
 use App\Http\Controllers\MatriculaController;
@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('estancias', EstanciaController::class);
+    Route::resource('grupos', GrupoController::class);
     Route::resource('estudiantes', EstudianteController::class);
     Route::resource('acudientes', AcudienteController::class);
     Route::resource('matriculas', MatriculaController::class);

@@ -16,7 +16,7 @@
                     <div><span class="text-gray-500">Estudiante:</span><br>
                         <a href="{{ route('estudiantes.show', $matricula->estudiante) }}" class="font-medium text-indigo-600 hover:underline">{{ $matricula->estudiante->nombre_completo }}</a>
                     </div>
-                    <div><span class="text-gray-500">Estancia:</span><br><span class="font-medium">{{ $matricula->estancia->nombre }}</span></div>
+                    <div><span class="text-gray-500">Grupo:</span><br><span class="font-medium">{{ $matricula->grupo->nombre }}</span></div>
                     <div><span class="text-gray-500">Año:</span><br><span class="font-medium">{{ $matricula->anio }} - {{ ucfirst($matricula->periodo) }}</span></div>
                     <div><span class="text-gray-500">Jornada:</span><br><span class="font-medium">{{ ucfirst($matricula->jornada) }}</span></div>
                     <div><span class="text-gray-500">Fecha Matrícula:</span><br><span class="font-medium">{{ $matricula->fecha_matricula->format('d/m/Y') }}</span></div>

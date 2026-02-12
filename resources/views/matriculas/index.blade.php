@@ -25,11 +25,11 @@
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="estancia_id" value="Estancia" />
-                        <select name="estancia_id" id="estancia_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <x-input-label for="grupo_id" value="Grupo" />
+                        <select name="grupo_id" id="grupo_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Todas</option>
-                            @foreach($estancias as $est)
-                                <option value="{{ $est->id }}" {{ request('estancia_id') == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
+                            @foreach($grupos as $est)
+                                <option value="{{ $est->id }}" {{ request('grupo_id') == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -56,7 +56,7 @@
                             <tr>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Código</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estudiante</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estancia</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Grupo</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Año</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Matrícula</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pensión</th>
@@ -69,7 +69,7 @@
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-mono">{{ $mat->codigo }}</td>
                                     <td class="px-4 py-3 text-sm font-medium">{{ $mat->estudiante->nombre_completo }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $mat->estancia->nombre }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ $mat->grupo->nombre }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $mat->anio }}</td>
                                     <td class="px-4 py-3 text-sm">${{ number_format($mat->valor_matricula, 0, ',', '.') }}</td>
                                     <td class="px-4 py-3 text-sm">${{ number_format($mat->valor_pension, 0, ',', '.') }}</td>

@@ -17,11 +17,11 @@
                         <x-text-input id="buscar" name="buscar" type="text" class="mt-1 block w-full" :value="request('buscar')" placeholder="Nombre, documento, código..." />
                     </div>
                     <div>
-                        <x-input-label for="estancia_id" value="Estancia" />
-                        <select name="estancia_id" id="estancia_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <x-input-label for="grupo_id" value="Grupo" />
+                        <select name="grupo_id" id="grupo_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">Todas</option>
-                            @foreach($estancias as $est)
-                                <option value="{{ $est->id }}" {{ request('estancia_id') == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
+                            @foreach($grupos as $est)
+                                <option value="{{ $est->id }}" {{ request('grupo_id') == $est->id ? 'selected' : '' }}>{{ $est->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -50,7 +50,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Código</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Edad</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estancia</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Grupo</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acudiente</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
@@ -62,7 +62,7 @@
                                     <td class="px-4 py-3 text-sm">{{ $est->codigo }}</td>
                                     <td class="px-4 py-3 text-sm font-medium">{{ $est->nombre_completo }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $est->edad }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $est->estancia?->nombre ?? '-' }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ $est->grupo?->nombre ?? '-' }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $est->acudiente?->nombre_completo }}</td>
                                     <td class="px-4 py-3 text-sm">
                                         <span class="px-2 py-0.5 text-xs rounded-full {{ $est->estado === 'activo' ? 'bg-green-100 text-green-800' : ($est->estado === 'retirado' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800') }}">

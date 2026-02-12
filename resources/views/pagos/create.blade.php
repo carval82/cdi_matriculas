@@ -19,7 +19,7 @@
                                             data-pension="{{ $mat->valor_pension }}"
                                             data-matricula="{{ $mat->valor_matricula }}"
                                             {{ old('matricula_id', $matricula?->id) == $mat->id ? 'selected' : '' }}>
-                                        {{ $mat->estudiante->nombre_completo }} - {{ $mat->estancia->nombre }} ({{ $mat->anio }}) [{{ $mat->codigo }}]
+                                        {{ $mat->estudiante->nombre_completo }} - {{ $mat->grupo->nombre }} ({{ $mat->anio }}) [{{ $mat->codigo }}]
                                     </option>
                                 @endforeach
                             </select>

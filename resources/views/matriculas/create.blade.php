@@ -24,19 +24,19 @@
                         </div>
 
                         <div>
-                            <x-input-label for="estancia_id" value="Estancia *" />
-                            <select id="estancia_id" name="estancia_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required onchange="actualizarValores()">
+                            <x-input-label for="grupo_id" value="Grupo *" />
+                            <select id="grupo_id" name="grupo_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required onchange="actualizarValores()">
                                 <option value="">Seleccionar</option>
-                                @foreach($estancias as $est)
+                                @foreach($grupos as $est)
                                     <option value="{{ $est->id }}" 
                                             data-matricula="{{ $est->valor_matricula }}" 
                                             data-pension="{{ $est->valor_pension }}"
-                                            {{ old('estancia_id', $estudiantePreseleccionado?->estancia_id) == $est->id ? 'selected' : '' }}>
+                                            {{ old('grupo_id', $estudiantePreseleccionado?->grupo_id) == $est->id ? 'selected' : '' }}>
                                         {{ $est->nombre }} ({{ $est->cuposDisponibles() }} cupos)
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('estancia_id')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('grupo_id')" class="mt-2" />
                         </div>
 
                         <div>
@@ -127,14 +127,14 @@
 
     <script>
         function actualizarValores() {
-            const select = document.getElementById('estancia_id');
+            const select = document.getElementById('grupo_id');
             const option = select.options[select.selectedIndex];
             if (option.value) {
                 document.getElementById('valor_matricula').value = option.dataset.matricula || 0;
                 document.getElementById('valor_pension').value = option.dataset.pension || 0;
             }
         }
-        // Auto-fill on load if estancia is preselected
+        // Auto-fill on load if grupo is preselected
         document.addEventListener('DOMContentLoaded', actualizarValores);
     </script>
 </x-app-layout>

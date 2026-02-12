@@ -27,7 +27,7 @@
                     <div><span class="text-gray-500">Estudiante:</span><br>
                         <a href="{{ route('estudiantes.show', $pago->estudiante) }}" class="font-medium text-indigo-600 hover:underline">{{ $pago->estudiante->nombre_completo }}</a>
                     </div>
-                    <div><span class="text-gray-500">Estancia:</span><br><span class="font-medium">{{ $pago->matricula?->estancia?->nombre ?? '-' }}</span></div>
+                    <div><span class="text-gray-500">Grupo:</span><br><span class="font-medium">{{ $pago->matricula?->grupo?->nombre ?? '-' }}</span></div>
                     <div><span class="text-gray-500">Matrícula:</span><br>
                         <a href="{{ route('matriculas.show', $pago->matricula) }}" class="font-medium text-indigo-600 hover:underline">{{ $pago->matricula->codigo }}</a>
                     </div>

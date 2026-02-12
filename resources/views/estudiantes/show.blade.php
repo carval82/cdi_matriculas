@@ -30,7 +30,7 @@
                             <div><span class="text-gray-500">Género:</span><br><span class="font-medium">{{ ucfirst($estudiante->genero) }}</span></div>
                             <div><span class="text-gray-500">RH:</span><br><span class="font-medium">{{ $estudiante->rh ?? '-' }}</span></div>
                             <div><span class="text-gray-500">EPS:</span><br><span class="font-medium">{{ $estudiante->eps ?? '-' }}</span></div>
-                            <div><span class="text-gray-500">Estancia:</span><br><span class="font-medium">{{ $estudiante->estancia?->nombre ?? 'Sin asignar' }}</span></div>
+                            <div><span class="text-gray-500">Grupo:</span><br><span class="font-medium">{{ $estudiante->grupo?->nombre ?? 'Sin asignar' }}</span></div>
                             <div><span class="text-gray-500">Estado:</span><br>
                                 <span class="px-2 py-0.5 text-xs rounded-full {{ $estudiante->estado === 'activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ ucfirst($estudiante->estado) }}</span>
                             </div>
@@ -94,7 +94,7 @@
                                 <tr>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Código</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Año</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Estancia</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Grupo</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
                                 </tr>
@@ -104,7 +104,7 @@
                                     <tr>
                                         <td class="px-4 py-2 text-sm">{{ $mat->codigo }}</td>
                                         <td class="px-4 py-2 text-sm">{{ $mat->anio }}</td>
-                                        <td class="px-4 py-2 text-sm">{{ $mat->estancia?->nombre }}</td>
+                                        <td class="px-4 py-2 text-sm">{{ $mat->grupo?->nombre }}</td>
                                         <td class="px-4 py-2 text-sm">
                                             <span class="px-2 py-0.5 text-xs rounded-full {{ $mat->estado === 'activa' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">{{ ucfirst($mat->estado) }}</span>
                                         </td>

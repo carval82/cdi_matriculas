@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Grupo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -15,7 +16,7 @@ class Estudiante extends Model
         'fecha_nacimiento', 'lugar_nacimiento', 'genero', 'rh', 'eps',
         'foto', 'alergias', 'condiciones_medicas', 'medicamentos',
         'contacto_emergencia', 'telefono_emergencia',
-        'acudiente_id', 'acudiente_secundario_id', 'estancia_id',
+        'acudiente_id', 'acudiente_secundario_id', 'grupo_id',
         'estado', 'fecha_ingreso', 'fecha_retiro', 'observaciones',
     ];
 
@@ -59,9 +60,9 @@ class Estudiante extends Model
         return $this->belongsTo(Acudiente::class, 'acudiente_secundario_id');
     }
 
-    public function estancia()
+    public function grupo()
     {
-        return $this->belongsTo(Estancia::class);
+        return $this->belongsTo(Grupo::class);
     }
 
     public function matriculas()

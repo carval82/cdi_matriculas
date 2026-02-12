@@ -31,7 +31,7 @@
                         @foreach($acudiente->estudiantes as $est)
                             <a href="{{ route('estudiantes.show', $est) }}" class="block border rounded-lg p-4 hover:shadow-md transition">
                                 <div class="font-medium">{{ $est->nombre_completo }}</div>
-                                <div class="text-sm text-gray-500">{{ $est->estancia?->nombre ?? 'Sin estancia' }} - {{ $est->edad }}</div>
+                                <div class="text-sm text-gray-500">{{ $est->grupo?->nombre ?? 'Sin grupo' }} - {{ $est->edad }}</div>
                                 <span class="mt-1 inline-block px-2 py-0.5 text-xs rounded-full {{ $est->estado === 'activo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">{{ ucfirst($est->estado) }}</span>
                             </a>
                         @endforeach

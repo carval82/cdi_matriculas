@@ -11,7 +11,7 @@ class PagoController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pago::with(['estudiante', 'matricula.estancia']);
+        $query = Pago::with(['estudiante', 'matricula.grupo']);
 
         if ($request->filled('estado')) {
             $query->where('estado', $request->estado);
@@ -42,10 +42,10 @@ class PagoController extends Controller
     {
         $matricula = null;
         if ($request->filled('matricula_id')) {
-            $matricula = Matricula::with(['estudiante', 'estancia'])->find($request->matricula_id);
+            $matricula = Matricula::with(['estudiante', 'grupo'])->find($request->matricula_id);
         }
 
-        $matriculas = Matricula::with(['estudiante', 'estancia'])
+        $matriculas = Matricula::with(['estudiante', 'grupo'])
             ->where('estado', 'activa')
             ->get();
 
@@ -93,7 +93,7 @@ class PagoController extends Controller
 
     public function show(Pago $pago)
     {
-        $pago->load(['estudiante', 'matricula.estancia']);
+        $pago->load(['estudiante', 'matricula.grupo']);
 
         return view('pagos.show', compact('pago'));
     }

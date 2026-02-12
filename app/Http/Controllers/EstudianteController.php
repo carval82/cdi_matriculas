@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
 use App\Models\Acudiente;
-use App\Models\Estancia;
+use App\Models\Grupo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,10 +12,10 @@ class EstudianteController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Estudiante::with(['estancia', 'acudiente']);
+        $query = Estudiante::with(['grupo', 'acudiente']);
 
-        if ($request->filled('estancia_id')) {
-            $query->where('estancia_id', $request->estancia_id);
+        if ($request->filled('grupo_id')) {
+            $query->where('grupo_id', $request->grupo_id);
         }
 
         if ($request->filled('estado')) {
@@ -33,17 +33,17 @@ class EstudianteController extends Controller
         }
 
         $estudiantes = $query->orderBy('apellidos')->paginate(20)->withQueryString();
-        $estancias = Estancia::where('activa', true)->orderBy('orden')->get();
+        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
 
-        return view('estudiantes.index', compact('estudiantes', 'estancias'));
+        return view('estudiantes.index', compact('estudiantes', 'grupos'));
     }
 
     public function create()
     {
-        $estancias = Estancia::where('activa', true)->orderBy('orden')->get();
+        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
         $acudientes = Acudiente::where('activo', true)->orderBy('nombres')->get();
 
-        return view('estudiantes.create', compact('estancias', 'acudientes'));
+        return view('estudiantes.create', compact('grupos', 'acudientes'));
     }
 
     public function store(Request $request)
@@ -53,7 +53,7 @@ class EstudianteController extends Controller
             'apellidos' => 'required|string|max:100',
             'fecha_nacimiento' => 'required|date',
             'acudiente_id' => 'required|exists:acudientes,id',
-            'estancia_id' => 'nullable|exists:estancias,id',
+            'grupo_id' => 'nullable|exists:grupos,id',
             'foto' => 'nullable|image|max:2048',
         ]);
 
@@ -80,17 +80,17 @@ class EstudianteController extends Controller
 
     public function show(Estudiante $estudiante)
     {
-        $estudiante->load(['estancia', 'acudiente', 'acudienteSecundario', 'matriculas.estancia', 'pagos']);
+        $estudiante->load(['grupo', 'acudiente', 'acudienteSecundario', 'matriculas.grupo', 'pagos']);
 
         return view('estudiantes.show', compact('estudiante'));
     }
 
     public function edit(Estudiante $estudiante)
     {
-        $estancias = Estancia::where('activa', true)->orderBy('orden')->get();
+        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
         $acudientes = Acudiente::where('activo', true)->orderBy('nombres')->get();
 
-        return view('estudiantes.edit', compact('estudiante', 'estancias', 'acudientes'));
+        return view('estudiantes.edit', compact('estudiante', 'grupos', 'acudientes'));
     }
 
     public function update(Request $request, Estudiante $estudiante)
