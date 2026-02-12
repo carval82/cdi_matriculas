@@ -120,13 +120,11 @@
                         <i class="fas fa-laptop-code text-indigo-500"></i> Desarrollado con
                     </h2>
                     <div class="mt-4 space-y-4">
-                        <div class="flex items-center gap-4 p-5 bg-gradient-to-r from-slate-50 to-indigo-50 rounded-xl">
-                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                                <i class="fas fa-rocket text-white text-xl"></i>
-                            </div>
+                        <div class="flex items-center gap-4 p-5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                            <img src="{{ asset('image/logo-icon.png') }}" alt="LC Design" class="w-16 h-16 object-contain flex-shrink-0">
                             <div>
-                                <div class="font-bold text-gray-800 text-lg">Anavalia Software</div>
-                                <div class="text-gray-500 text-sm">Soluciones tecnológicas a la medida</div>
+                                <div class="font-bold text-gray-800 text-lg">LC Design</div>
+                                <div class="text-gray-500 text-sm">Desarrollo de Software</div>
                                 <div class="flex items-center gap-4 mt-2">
                                     <a href="https://github.com/carval82" target="_blank" class="text-gray-400 hover:text-gray-700 transition">
                                         <i class="fab fa-github text-lg"></i>
@@ -149,7 +147,7 @@
 
                 <!-- Footer -->
                 <div class="text-center text-sm text-gray-400 pt-4 border-t">
-                    &copy; {{ date('Y') }} CDI Matrículas — Anavalia Software + Cascade AI. Todos los derechos reservados.
+                    &copy; {{ date('Y') }} CDI Matrículas — LC Design + Cascade AI. Todos los derechos reservados.
                 </div>
             </div>
         </div>
