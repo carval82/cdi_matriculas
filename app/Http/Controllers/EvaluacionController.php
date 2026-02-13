@@ -29,25 +29,19 @@ class EvaluacionController extends Controller
     }
 
     /**
-     * Vista de evaluación por grupo y periodo (tipo asistencia).
+     * Lista de estudiantes por grupo para evaluar individualmente.
      */
     public function index(Request $request)
     {
         $grupos = $this->gruposPermitidos();
-        $conceptos = ConceptoEvaluativo::where('activo', true)->orderBy('orden')->get();
-        $periodos = Evaluacion::periodos();
-        $valoraciones = Evaluacion::valoraciones();
-
         $grupoId = $request->grupo_id;
-        $periodo = $request->periodo ?? 'P1';
         $anio = $request->anio ?? date('Y');
 
         $estudiantes = collect();
-        $evaluaciones = collect();
         $grupo = null;
+        $conceptosCount = ConceptoEvaluativo::where('activo', true)->count();
 
         if ($grupoId) {
-            // Verificar que el docente tiene acceso a este grupo
             if (!$grupos->contains('id', (int) $grupoId)) {
                 abort(403, 'No tienes acceso a este grupo.');
             }
@@ -58,65 +52,27 @@ class EvaluacionController extends Controller
                 ->orderBy('apellidos')
                 ->get();
 
-            $evaluaciones = Evaluacion::where('grupo_id', $grupoId)
-                ->where('periodo', $periodo)
-                ->where('anio', $anio)
-                ->get()
-                ->groupBy('estudiante_id');
+            // Contar evaluaciones por estudiante para mostrar progreso
+            $totalConceptos = $conceptosCount * 4; // 4 periodos
+            foreach ($estudiantes as $est) {
+                $est->evaluaciones_count = Evaluacion::where('estudiante_id', $est->id)
+                    ->where('anio', $anio)
+                    ->count();
+                $est->progreso = $totalConceptos > 0 ? round(($est->evaluaciones_count / $totalConceptos) * 100) : 0;
+            }
         }
 
         return view('evaluaciones.index', compact(
-            'grupos', 'conceptos', 'periodos', 'valoraciones',
-            'grupo', 'estudiantes', 'evaluaciones',
-            'grupoId', 'periodo', 'anio'
+            'grupos', 'grupo', 'estudiantes', 'grupoId', 'anio', 'conceptosCount'
         ));
     }
 
     /**
-     * Guardar evaluaciones masivas.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'grupo_id' => 'required|exists:grupos,id',
-            'periodo' => 'required|in:P1,P2,P3,P4',
-            'anio' => 'required|integer',
-            'evaluaciones' => 'required|array',
-        ]);
-
-        foreach ($request->evaluaciones as $estudianteId => $conceptos) {
-            foreach ($conceptos as $conceptoId => $valoracion) {
-                if ($valoracion) {
-                    Evaluacion::updateOrCreate(
-                        [
-                            'estudiante_id' => $estudianteId,
-                            'concepto_evaluativo_id' => $conceptoId,
-                            'periodo' => $request->periodo,
-                            'anio' => $request->anio,
-                        ],
-                        [
-                            'grupo_id' => $request->grupo_id,
-                            'valoracion' => $valoracion,
-                            'observacion' => $request->observaciones[$estudianteId][$conceptoId] ?? null,
-                            'evaluado_por' => Auth::id(),
-                        ]
-                    );
-                }
-            }
-        }
-
-        return redirect()->route('evaluaciones.index', [
-            'grupo_id' => $request->grupo_id,
-            'periodo' => $request->periodo,
-            'anio' => $request->anio,
-        ])->with('success', 'Evaluaciones guardadas correctamente.');
-    }
-
-    /**
-     * Ver evaluación individual de un estudiante.
+     * Ver y editar evaluación individual de un estudiante.
      */
     public function estudiante(Estudiante $estudiante, Request $request)
     {
+        $periodo = $request->periodo ?? 'P1';
         $anio = $request->anio ?? date('Y');
         $conceptos = ConceptoEvaluativo::where('activo', true)->orderBy('orden')->get();
         $periodos = Evaluacion::periodos();
@@ -130,8 +86,49 @@ class EvaluacionController extends Controller
 
         return view('evaluaciones.estudiante', compact(
             'estudiante', 'conceptos', 'periodos', 'valoraciones',
-            'evaluaciones', 'anio'
+            'evaluaciones', 'anio', 'periodo'
         ));
+    }
+
+    /**
+     * Guardar evaluación individual de un estudiante.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'estudiante_id' => 'required|exists:estudiantes,id',
+            'periodo' => 'required|in:P1,P2,P3,P4',
+            'anio' => 'required|integer',
+        ]);
+
+        $estudiante = Estudiante::findOrFail($request->estudiante_id);
+
+        if ($request->has('evaluaciones')) {
+            foreach ($request->evaluaciones as $conceptoId => $valoracion) {
+                if ($valoracion) {
+                    Evaluacion::updateOrCreate(
+                        [
+                            'estudiante_id' => $estudiante->id,
+                            'concepto_evaluativo_id' => $conceptoId,
+                            'periodo' => $request->periodo,
+                            'anio' => $request->anio,
+                        ],
+                        [
+                            'grupo_id' => $estudiante->grupo_id,
+                            'valoracion' => $valoracion,
+                            'observacion' => $request->observaciones[$conceptoId] ?? null,
+                            'evaluado_por' => Auth::id(),
+                        ]
+                    );
+                }
+            }
+        }
+
+        return redirect()->route('evaluaciones.estudiante', [
+            'estudiante' => $estudiante->id,
+            'periodo' => $request->periodo,
+            'anio' => $request->anio,
+        ])->with('success', 'Evaluación guardada correctamente para ' . $estudiante->nombre_completo);
     }
 
     // ─── CRUD Conceptos Evaluativos ───

@@ -2,6 +2,13 @@
     <x-slot name="header">Evaluación: {{ $estudiante->nombre_completo }}</x-slot>
 
     <div class="space-y-6">
+        @if(session('success'))
+            <div class="p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 flex items-center gap-2">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+            </div>
+        @endif
+
+        {{-- Info del estudiante --}}
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-3">
                 @if($estudiante->foto)
@@ -13,35 +20,117 @@
                 @endif
                 <div>
                     <h2 class="font-semibold text-gray-800">{{ $estudiante->nombre_completo }}</h2>
-                    <p class="text-sm text-gray-500">{{ $estudiante->grupo?->nombre ?? 'Sin grupo' }} · {{ $estudiante->edad }}</p>
+                    <p class="text-sm text-gray-500">{{ $estudiante->grupo?->nombre ?? 'Sin grupo' }} · {{ $estudiante->edad }} · {{ $estudiante->codigo }}</p>
                 </div>
             </div>
-            <a href="{{ route('estudiantes.show', $estudiante) }}" class="text-sm text-indigo-600 hover:underline"><i class="fas fa-arrow-left mr-1"></i> Ver Estudiante</a>
+            <div class="flex gap-2">
+                <a href="{{ route('evaluaciones.index', ['grupo_id' => $estudiante->grupo_id, 'anio' => $anio]) }}" class="text-sm text-indigo-600 hover:underline"><i class="fas fa-arrow-left mr-1"></i> Volver al grupo</a>
+            </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-            <form method="GET" class="flex gap-3 items-end">
-                <input type="hidden" name="estudiante" value="{{ $estudiante->id }}">
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 mb-1">Año</label>
-                    <input type="number" name="anio" value="{{ $anio }}" min="2020" class="border-gray-300 rounded-md shadow-sm text-sm w-24 focus:border-indigo-500 focus:ring-indigo-500">
+        {{-- Tabs de periodo + año --}}
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-4 border-b bg-gray-50 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex gap-1">
+                    @foreach($periodos as $pk => $pv)
+                        <a href="{{ route('evaluaciones.estudiante', ['estudiante' => $estudiante->id, 'periodo' => $pk, 'anio' => $anio]) }}"
+                           class="px-4 py-2 rounded-lg text-sm font-semibold transition {{ $periodo == $pk ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                            {{ $pv }}
+                            @php $pCount = isset($evaluaciones[$pk]) ? $evaluaciones[$pk]->count() : 0; @endphp
+                            @if($pCount > 0)
+                                <span class="ml-1 text-xs {{ $periodo == $pk ? 'text-indigo-200' : 'text-gray-400' }}">{{ $pCount }}</span>
+                            @endif
+                        </a>
+                    @endforeach
                 </div>
-                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition">
-                    <i class="fas fa-search"></i> Consultar
-                </button>
-            </form>
+                <form method="GET" class="flex gap-2 items-center">
+                    <input type="hidden" name="periodo" value="{{ $periodo }}">
+                    <label class="text-xs text-gray-500">Año:</label>
+                    <input type="number" name="anio" value="{{ $anio }}" min="2020" class="border-gray-300 rounded-md shadow-sm text-sm w-20 focus:border-indigo-500 focus:ring-indigo-500" onchange="this.form.submit()">
+                </form>
+            </div>
+
+            {{-- Formulario de evaluación individual --}}
+            @if($conceptos->count())
+                <form action="{{ route('evaluaciones.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="estudiante_id" value="{{ $estudiante->id }}">
+                    <input type="hidden" name="periodo" value="{{ $periodo }}">
+                    <input type="hidden" name="anio" value="{{ $anio }}">
+
+                    <div class="divide-y">
+                        @foreach($conceptos as $c)
+                            @php
+                                $eval = isset($evaluaciones[$periodo]) ? $evaluaciones[$periodo]->firstWhere('concepto_evaluativo_id', $c->id) : null;
+                                $val = $eval?->valoracion ?? '';
+                                $obs = $eval?->observacion ?? '';
+                            @endphp
+                            <div class="px-5 py-4 hover:bg-gray-50 transition">
+                                <div class="flex flex-col md:flex-row md:items-center gap-3">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="font-medium text-gray-800 text-sm">{{ $c->nombre }}</div>
+                                        @if($c->descripcion)
+                                            <div class="text-xs text-gray-400 mt-0.5">{{ $c->descripcion }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="flex items-center gap-3 flex-shrink-0">
+                                        <select name="evaluaciones[{{ $c->id }}]"
+                                            class="border-gray-200 rounded-lg text-sm py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500 min-w-[150px]
+                                            {{ $val == 'superior' ? 'bg-blue-50 text-blue-700 border-blue-200' : '' }}
+                                            {{ $val == 'alto' ? 'bg-green-50 text-green-700 border-green-200' : '' }}
+                                            {{ $val == 'basico' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' : '' }}
+                                            {{ $val == 'bajo' ? 'bg-red-50 text-red-700 border-red-200' : '' }}
+                                            {{ $val == 'en_proceso' ? 'bg-gray-50 text-gray-600' : '' }}"
+                                            onchange="var c={'superior':'bg-blue-50 text-blue-700 border-blue-200','alto':'bg-green-50 text-green-700 border-green-200','basico':'bg-yellow-50 text-yellow-700 border-yellow-200','bajo':'bg-red-50 text-red-700 border-red-200','en_proceso':'bg-gray-50 text-gray-600'}; this.className=this.className.replace(/bg-\w+-50|text-\w+-\d+|border-\w+-\d+/g,''); if(c[this.value]) this.className+=' '+c[this.value];">
+                                            <option value="">— Sin evaluar —</option>
+                                            @foreach($valoraciones as $vk => $vl)
+                                                <option value="{{ $vk }}" {{ $val == $vk ? 'selected' : '' }}>{{ $vl }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="text" name="observaciones[{{ $c->id }}]" value="{{ $obs }}" placeholder="Observación..."
+                                            class="border-gray-200 rounded-lg text-sm py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500 w-48 hidden md:block">
+                                    </div>
+                                </div>
+                                <div class="mt-2 md:hidden">
+                                    <input type="text" name="observaciones[{{ $c->id }}]" value="{{ $obs }}" placeholder="Observación..."
+                                        class="w-full border-gray-200 rounded-lg text-sm py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="p-4 border-t bg-gray-50 flex justify-between items-center">
+                        <div class="flex gap-2 text-xs">
+                            <span class="px-2 py-1 rounded bg-blue-50 text-blue-700">Superior</span>
+                            <span class="px-2 py-1 rounded bg-green-50 text-green-700">Alto</span>
+                            <span class="px-2 py-1 rounded bg-yellow-50 text-yellow-700">Básico</span>
+                            <span class="px-2 py-1 rounded bg-red-50 text-red-700">Bajo</span>
+                            <span class="px-2 py-1 rounded bg-gray-100 text-gray-600">En Proceso</span>
+                        </div>
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-indigo-600 rounded-lg font-semibold text-sm text-white hover:bg-indigo-700 transition shadow-sm">
+                            <i class="fas fa-save"></i> Guardar {{ $periodos[$periodo] }}
+                        </button>
+                    </div>
+                </form>
+            @else
+                <div class="p-8 text-center text-gray-500">
+                    <p>No hay conceptos evaluativos creados.</p>
+                    <a href="{{ route('conceptos.index') }}" class="text-indigo-600 hover:underline text-sm mt-2 inline-block">Crear conceptos evaluativos</a>
+                </div>
+            @endif
         </div>
 
+        {{-- Resumen general de todos los periodos --}}
         @if($conceptos->count())
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-4 border-b bg-gray-50">
-                <span class="font-semibold text-gray-800">Evaluaciones {{ $anio }}</span>
+                <span class="font-semibold text-gray-800">Resumen Anual {{ $anio }}</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase min-w-[200px]">Concepto Evaluativo</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase min-w-[200px]">Concepto</th>
                             @foreach($periodos as $pk => $pv)
                                 <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">{{ $pv }}</th>
                             @endforeach
@@ -50,9 +139,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($conceptos as $c)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm font-medium text-gray-800" title="{{ $c->descripcion }}">
-                                    {{ $c->nombre }}
-                                </td>
+                                <td class="px-4 py-2.5 text-sm font-medium text-gray-800">{{ $c->nombre }}</td>
                                 @foreach($periodos as $pk => $pv)
                                     @php
                                         $eval = isset($evaluaciones[$pk]) ? $evaluaciones[$pk]->firstWhere('concepto_evaluativo_id', $c->id) : null;
@@ -65,7 +152,7 @@
                                             'en_proceso' => 'bg-gray-100 text-gray-600',
                                         ];
                                     @endphp
-                                    <td class="px-4 py-3 text-center">
+                                    <td class="px-4 py-2.5 text-center">
                                         @if($val)
                                             <span class="inline-block px-2.5 py-1 text-xs font-semibold rounded-full {{ $colors[$val] ?? '' }}">
                                                 {{ $valoraciones[$val] ?? $val }}
@@ -80,44 +167,7 @@
                     </tbody>
                 </table>
             </div>
-
-            {{-- Resumen --}}
-            <div class="p-4 border-t bg-gray-50">
-                <h4 class="text-sm font-semibold text-gray-700 mb-3">Resumen por Periodo</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    @foreach($periodos as $pk => $pv)
-                        @php
-                            $periodoEvals = $evaluaciones[$pk] ?? collect();
-                            $total = $periodoEvals->count();
-                            $sup = $periodoEvals->where('valoracion', 'superior')->count();
-                            $alt = $periodoEvals->where('valoracion', 'alto')->count();
-                            $bas = $periodoEvals->where('valoracion', 'basico')->count();
-                            $baj = $periodoEvals->where('valoracion', 'bajo')->count();
-                            $enp = $periodoEvals->where('valoracion', 'en_proceso')->count();
-                        @endphp
-                        <div class="p-3 bg-white border rounded-xl">
-                            <div class="font-semibold text-sm text-gray-700 mb-2">{{ $pv }}</div>
-                            @if($total)
-                                <div class="space-y-1 text-xs">
-                                    <div class="flex justify-between"><span class="text-blue-600">Superior</span><span class="font-bold">{{ $sup }}</span></div>
-                                    <div class="flex justify-between"><span class="text-green-600">Alto</span><span class="font-bold">{{ $alt }}</span></div>
-                                    <div class="flex justify-between"><span class="text-yellow-600">Básico</span><span class="font-bold">{{ $bas }}</span></div>
-                                    <div class="flex justify-between"><span class="text-red-600">Bajo</span><span class="font-bold">{{ $baj }}</span></div>
-                                    <div class="flex justify-between"><span class="text-gray-500">En Proceso</span><span class="font-bold">{{ $enp }}</span></div>
-                                </div>
-                            @else
-                                <p class="text-xs text-gray-400">Sin evaluar</p>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
         </div>
-        @else
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8 text-center text-gray-500">
-                <p>No hay conceptos evaluativos creados.</p>
-                <a href="{{ route('conceptos.index') }}" class="text-indigo-600 hover:underline text-sm mt-2 inline-block">Crear conceptos evaluativos</a>
-            </div>
         @endif
     </div>
 </x-app-layout>
