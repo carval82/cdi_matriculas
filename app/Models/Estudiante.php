@@ -83,4 +83,9 @@ class Estudiante extends Model
     {
         return $this->hasMany(Pago::class);
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(DocumentoEstudiante::class);
+    }
 }

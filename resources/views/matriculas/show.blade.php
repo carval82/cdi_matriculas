@@ -2,7 +2,9 @@
     <x-slot name="header">Matrícula {{ $matricula->codigo }}</x-slot>
 
     <div class="space-y-6">
-        <div class="flex justify-end gap-2">
+        <div class="flex justify-end gap-2 flex-wrap">
+            <a href="{{ route('matriculas.print', $matricula) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 rounded-lg font-semibold text-sm text-white hover:bg-indigo-700 transition shadow-sm"><i class="fas fa-print"></i> Imprimir Matrícula</a>
+            <a href="{{ route('estudiantes.documentos', $matricula->estudiante) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 rounded-lg font-semibold text-sm text-white hover:bg-purple-700 transition shadow-sm"><i class="fas fa-folder-open"></i> Documentos</a>
             <a href="{{ route('pagos.create', ['matricula_id' => $matricula->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 rounded-lg font-semibold text-sm text-white hover:bg-green-700 transition shadow-sm"><i class="fas fa-money-bill-wave"></i> Registrar Pago</a>
             <a href="{{ route('matriculas.edit', $matricula) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 rounded-lg font-semibold text-sm text-white hover:bg-amber-600 transition shadow-sm"><i class="fas fa-edit"></i> Editar</a>
         </div>
@@ -35,6 +37,30 @@
                 @if($matricula->observaciones)
                     <p class="mt-4 text-sm text-gray-600">{{ $matricula->observaciones }}</p>
                 @endif
+            </div>
+
+            <!-- PDF Firmado -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3"><i class="fas fa-file-pdf text-red-500 mr-1"></i> Matrícula Firmada (PDF)</h3>
+                @if($matricula->pdf_firmado)
+                    <div class="flex items-center gap-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <i class="fas fa-file-pdf text-red-500 text-2xl"></i>
+                        <div class="flex-1">
+                            <p class="font-medium text-gray-800">PDF firmado cargado</p>
+                            <p class="text-sm text-gray-500">{{ basename($matricula->pdf_firmado) }}</p>
+                        </div>
+                        <a href="{{ asset('storage/' . $matricula->pdf_firmado) }}" target="_blank" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition"><i class="fas fa-eye mr-1"></i> Ver</a>
+                        <a href="{{ asset('storage/' . $matricula->pdf_firmado) }}" download class="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm font-semibold hover:bg-gray-700 transition"><i class="fas fa-download mr-1"></i> Descargar</a>
+                    </div>
+                @endif
+                <form action="{{ route('matriculas.uploadPdf', $matricula) }}" method="POST" enctype="multipart/form-data" class="mt-3 flex items-end gap-3">
+                    @csrf
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ $matricula->pdf_firmado ? 'Reemplazar PDF' : 'Subir PDF firmado' }}</label>
+                        <input type="file" name="pdf_firmado" accept=".pdf" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    </div>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition whitespace-nowrap"><i class="fas fa-upload mr-1"></i> Subir PDF</button>
+                </form>
             </div>
 
             <!-- Estado de pensiones -->

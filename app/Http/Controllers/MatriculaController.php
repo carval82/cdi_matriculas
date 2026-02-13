@@ -7,6 +7,8 @@ use App\Models\Estudiante;
 use App\Models\Grupo;
 use App\Models\Acudiente;
 use App\Models\Pago;
+use App\Models\Establecimiento;
+use App\Models\DocumentoEstudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -256,5 +258,72 @@ class MatriculaController extends Controller
 
         return redirect()->route('matriculas.index')
             ->with('success', 'Matrícula eliminada.');
+    }
+
+    /**
+     * Vista imprimible de matrícula para firma.
+     */
+    public function print(Matricula $matricula)
+    {
+        $matricula->load(['estudiante.acudiente', 'grupo', 'acudiente']);
+        $establecimiento = Establecimiento::datos();
+
+        return view('matriculas.print', compact('matricula', 'establecimiento'));
+    }
+
+    /**
+     * Subir PDF firmado de la matrícula.
+     */
+    public function uploadPdf(Request $request, Matricula $matricula)
+    {
+        $request->validate([
+            'pdf_firmado' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        if ($matricula->pdf_firmado) {
+            Storage::disk('public')->delete($matricula->pdf_firmado);
+        }
+
+        $path = $request->file('pdf_firmado')->store('matriculas/pdf', 'public');
+        $matricula->update(['pdf_firmado' => $path]);
+
+        return back()->with('success', 'PDF firmado subido correctamente.');
+    }
+
+    // ─── Documentos del Estudiante ───
+
+    public function documentos(Estudiante $estudiante)
+    {
+        $documentos = $estudiante->documentos()->latest()->get();
+        $tipos = DocumentoEstudiante::tipos();
+        return view('estudiantes.documentos', compact('estudiante', 'documentos', 'tipos'));
+    }
+
+    public function documentoStore(Request $request, Estudiante $estudiante)
+    {
+        $request->validate([
+            'tipo' => 'required|string|max:80',
+            'nombre' => 'required|string|max:200',
+            'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+        ]);
+
+        $path = $request->file('archivo')->store('estudiantes/documentos/' . $estudiante->id, 'public');
+
+        $estudiante->documentos()->create([
+            'tipo' => $request->tipo,
+            'nombre' => $request->nombre,
+            'archivo' => $path,
+            'observaciones' => $request->observaciones,
+            'subido_por' => Auth::id(),
+        ]);
+
+        return back()->with('success', 'Documento subido correctamente.');
+    }
+
+    public function documentoDestroy(DocumentoEstudiante $documento)
+    {
+        Storage::disk('public')->delete($documento->archivo);
+        $documento->delete();
+        return back()->with('success', 'Documento eliminado.');
     }
 }

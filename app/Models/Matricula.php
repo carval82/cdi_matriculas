@@ -13,7 +13,7 @@ class Matricula extends Model
         'codigo', 'estudiante_id', 'grupo_id', 'acudiente_id',
         'anio', 'periodo', 'fecha_matricula', 'valor_matricula',
         'valor_pension', 'descuento', 'tipo_descuento', 'estado',
-        'jornada', 'observaciones', 'created_by',
+        'jornada', 'observaciones', 'pdf_firmado', 'created_by',
     ];
 
     protected $casts = [

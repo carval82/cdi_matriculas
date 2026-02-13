@@ -2,7 +2,9 @@
     <x-slot name="header">{{ $estudiante->nombre_completo }}</x-slot>
 
     <div class="space-y-6">
-        <div class="flex justify-end gap-2">
+        <div class="flex justify-end gap-2 flex-wrap">
+            <a href="{{ route('estudiantes.documentos', $estudiante) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 rounded-lg font-semibold text-sm text-white hover:bg-purple-700 transition shadow-sm"><i class="fas fa-folder-open"></i> Documentos</a>
+            <a href="{{ route('evaluaciones.estudiante', $estudiante) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 rounded-lg font-semibold text-sm text-white hover:bg-teal-700 transition shadow-sm"><i class="fas fa-star"></i> Evaluaciones</a>
             <a href="{{ route('matriculas.create', ['estudiante_id' => $estudiante->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 rounded-lg font-semibold text-sm text-white hover:bg-green-700 transition shadow-sm"><i class="fas fa-file-signature"></i> Matricular</a>
             <a href="{{ route('estudiantes.edit', $estudiante) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 rounded-lg font-semibold text-sm text-white hover:bg-amber-600 transition shadow-sm"><i class="fas fa-edit"></i> Editar</a>
         </div>

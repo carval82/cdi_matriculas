@@ -28,6 +28,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('acudientes', AcudienteController::class);
         Route::get('/acudientes-buscar', [AcudienteController::class, 'buscar'])->name('acudientes.buscar');
         Route::resource('matriculas', MatriculaController::class);
+        Route::get('/matriculas/{matricula}/print', [MatriculaController::class, 'print'])->name('matriculas.print');
+        Route::post('/matriculas/{matricula}/upload-pdf', [MatriculaController::class, 'uploadPdf'])->name('matriculas.uploadPdf');
+        Route::get('/estudiantes/{estudiante}/documentos', [MatriculaController::class, 'documentos'])->name('estudiantes.documentos');
+        Route::post('/estudiantes/{estudiante}/documentos', [MatriculaController::class, 'documentoStore'])->name('estudiantes.documentos.store');
+        Route::delete('/documentos/{documento}', [MatriculaController::class, 'documentoDestroy'])->name('estudiantes.documentos.destroy');
         Route::resource('pagos', PagoController::class);
         Route::get('/pagos/{pago}/recibo', [PagoController::class, 'recibo'])->name('pagos.recibo');
         Route::resource('docentes', DocenteController::class);
