@@ -1,0 +1,141 @@
+============================================================
+  CDI MATRICULAS - GUIA DE INSTALACION
+  Sistema de Gestión Académica para Centros de Desarrollo Infantil
+  Desarrollado por: Luis Carlos Correa Arrieta - LC Design
+  Contacto: contacto@lcdesign.com.co | 301 248 1020
+============================================================
+
+REQUISITOS:
+  - XAMPP (Apache + MySQL + PHP 8.2+)
+  - Composer (https://getcomposer.org)
+  - Node.js 18+ (https://nodejs.org)
+  - Git (https://git-scm.com)
+
+============================================================
+OPCION 1: INSTALACION AUTOMATICA
+============================================================
+
+  1. Clonar el repositorio:
+     git clone https://github.com/carval82/cdi_matriculas.git
+
+  2. Ejecutar el script de instalación:
+     cd cdi_matriculas\scripts
+     install.bat
+
+  3. Configurar host virtual (como Administrador):
+     scripts\setup-vhost.bat
+
+  4. Acceder al sistema:
+     http://cdimatriculas.test
+
+============================================================
+OPCION 2: INSTALACION MANUAL
+============================================================
+
+  1. Clonar el repositorio:
+     git clone https://github.com/carval82/cdi_matriculas.git
+     cd cdi_matriculas
+
+  2. Instalar dependencias PHP:
+     composer install
+
+  3. Copiar archivo de entorno:
+     copy .env.example .env
+
+  4. Editar .env con los datos de la base de datos:
+     DB_DATABASE=cdi_matriculas
+     DB_USERNAME=root
+     DB_PASSWORD=
+
+  5. Generar clave de aplicación:
+     php artisan key:generate
+
+  6. Crear la base de datos en MySQL:
+     CREATE DATABASE cdi_matriculas CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+  7. Ejecutar migraciones:
+     php artisan migrate
+
+  8. Crear usuario administrador:
+     php artisan db:seed
+
+  9. Crear enlace de storage (fotos y logos):
+     php artisan storage:link
+
+  10. Instalar y compilar assets:
+      npm install
+      npm run build
+
+  11. Acceder al sistema:
+      http://localhost/laravel/cdi_matriculas/public
+
+============================================================
+HOST VIRTUAL (OPCIONAL)
+============================================================
+
+  Para acceder con un dominio personalizado (ej: cdimatriculas.test):
+
+  1. Editar C:\Windows\System32\drivers\etc\hosts (como Admin):
+     Agregar: 127.0.0.1    cdimatriculas.test
+
+  2. Editar C:\xampp\apache\conf\extra\httpd-vhosts.conf:
+     Agregar al final:
+
+     <VirtualHost *:80>
+         ServerName cdimatriculas.test
+         DocumentRoot "C:\xampp\htdocs\laravel\cdi_matriculas\public"
+         <Directory "C:\xampp\htdocs\laravel\cdi_matriculas\public">
+             Options Indexes FollowSymLinks MultiViews
+             AllowOverride All
+             Require all granted
+         </Directory>
+     </VirtualHost>
+
+  3. Reiniciar Apache desde XAMPP.
+
+  O simplemente ejecutar: scripts\setup-vhost.bat (como Administrador)
+
+============================================================
+CREDENCIALES DE ACCESO
+============================================================
+
+  Email:      pcapacho24@gmail.com
+  Contraseña: anaval33
+  Rol:        Administrador
+
+============================================================
+MODULOS DEL SISTEMA
+============================================================
+
+  - Dashboard (estadísticas en tiempo real)
+  - Grupos (Párvulos, Jardín, Pre-Jardín, etc.)
+  - Estudiantes (datos médicos, sociales, demográficos)
+  - Acudientes (padres y responsables)
+  - Docentes (asignación a grupos, acceso al sistema)
+  - Matrículas (proceso integrado)
+  - Pagos (recibos imprimibles)
+  - Asistencia (toma diaria, reporte mensual)
+  - Evaluaciones (conceptos por dimensiones, valoración por periodo)
+  - Usuarios y Roles (Admin, Docente, Secretaria)
+  - Establecimiento (datos del CDI, logo)
+
+============================================================
+ROLES DE USUARIO
+============================================================
+
+  ADMINISTRADOR: Acceso total al sistema.
+  SECRETARIA:    Grupos, Estudiantes, Acudientes, Matrículas, Pagos,
+                 Docentes, Asistencia, Evaluaciones.
+  DOCENTE:       Solo sus grupos asignados, Estudiantes de esos grupos,
+                 Asistencia, Evaluaciones.
+
+============================================================
+SOPORTE
+============================================================
+
+  Luis Carlos Correa Arrieta
+  LC Design - Desarrollo de Software
+  Email: contacto@lcdesign.com.co
+  Tel:   301 248 1020
+
+============================================================
