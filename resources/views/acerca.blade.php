@@ -42,6 +42,15 @@
                         <i class="fas fa-puzzle-piece text-blue-500"></i> Módulos
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="flex items-start gap-3 p-4 bg-rose-50 rounded-xl">
+                            <div class="w-10 h-10 bg-rose-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-800">Dashboard</div>
+                                <div class="text-sm text-gray-500">Estadísticas y resumen en tiempo real</div>
+                            </div>
+                        </div>
                         <div class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl">
                             <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-school text-white"></i>
@@ -57,7 +66,7 @@
                             </div>
                             <div>
                                 <div class="font-semibold text-gray-800">Estudiantes</div>
-                                <div class="text-sm text-gray-500">Registro completo con datos médicos y personales</div>
+                                <div class="text-sm text-gray-500">Registro completo con datos médicos, sociales y demográficos</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-3 p-4 bg-green-50 rounded-xl">
@@ -69,13 +78,22 @@
                                 <div class="text-sm text-gray-500">Gestión de padres y responsables</div>
                             </div>
                         </div>
+                        <div class="flex items-start gap-3 p-4 bg-indigo-50 rounded-xl">
+                            <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chalkboard-teacher text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-800">Docentes</div>
+                                <div class="text-sm text-gray-500">CRUD, asignación a grupos y creación de acceso al sistema</div>
+                            </div>
+                        </div>
                         <div class="flex items-start gap-3 p-4 bg-amber-50 rounded-xl">
                             <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-file-signature text-white"></i>
                             </div>
                             <div>
                                 <div class="font-semibold text-gray-800">Matrículas</div>
-                                <div class="text-sm text-gray-500">Proceso de matrícula con seguimiento de pensiones</div>
+                                <div class="text-sm text-gray-500">Proceso integrado con creación de estudiante y acudiente</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-3 p-4 bg-emerald-50 rounded-xl">
@@ -84,16 +102,43 @@
                             </div>
                             <div>
                                 <div class="font-semibold text-gray-800">Pagos</div>
-                                <div class="text-sm text-gray-500">Control de pagos, recibos y estados de cuenta</div>
+                                <div class="text-sm text-gray-500">Control de pagos, recibos imprimibles y estados de cuenta</div>
                             </div>
                         </div>
-                        <div class="flex items-start gap-3 p-4 bg-rose-50 rounded-xl">
-                            <div class="w-10 h-10 bg-rose-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-chart-bar text-white"></i>
+                        <div class="flex items-start gap-3 p-4 bg-teal-50 rounded-xl">
+                            <div class="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clipboard-check text-white"></i>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-800">Dashboard</div>
-                                <div class="text-sm text-gray-500">Estadísticas y resumen en tiempo real</div>
+                                <div class="font-semibold text-gray-800">Asistencia</div>
+                                <div class="text-sm text-gray-500">Toma diaria por grupo y reporte mensual con porcentajes</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-yellow-50 rounded-xl">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-star text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-800">Evaluaciones</div>
+                                <div class="text-sm text-gray-500">Conceptos evaluativos por dimensiones, valoración por periodo</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-red-50 rounded-xl">
+                            <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-users-cog text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-800">Usuarios y Roles</div>
+                                <div class="text-sm text-gray-500">Administrador, Docente y Secretaria con permisos diferenciados</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                            <div class="w-10 h-10 bg-slate-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-building text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-800">Establecimiento</div>
+                                <div class="text-sm text-gray-500">Datos del CDI, logo y configuración general</div>
                             </div>
                         </div>
                     </div>
