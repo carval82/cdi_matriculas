@@ -32,14 +32,28 @@ echo [INFO] Archivo hosts:  %HOSTS_FILE%
 echo.
 
 :: ─── 1. Configurar archivo hosts ───
-echo [PASO 1/3] Configurando archivo hosts...
+echo [PASO 1/3] Archivo hosts...
 findstr /C:"%DOMAIN%" "%HOSTS_FILE%" >nul 2>&1
 if %errorlevel% equ 0 (
     echo          Ya existe la entrada para %DOMAIN% en hosts. Omitiendo...
 ) else (
-    echo.>> "%HOSTS_FILE%"
-    echo 127.0.0.1       %DOMAIN%>> "%HOSTS_FILE%"
-    echo          Entrada agregada: 127.0.0.1  %DOMAIN%
+    echo.
+    echo          Agrega esta linea al final del archivo hosts:
+    echo.
+    echo          127.0.0.1       %DOMAIN%
+    echo.
+    echo          Se abrira el Bloc de notas con el archivo hosts.
+    echo          Agrega la linea, guarda (Ctrl+S) y cierra el Bloc de notas.
+    echo.
+    pause
+    start /wait notepad.exe "%HOSTS_FILE%"
+    echo          Verificando...
+    findstr /C:"%DOMAIN%" "%HOSTS_FILE%" >nul 2>&1
+    if %errorlevel% equ 0 (
+        echo          Entrada para %DOMAIN% detectada. OK!
+    ) else (
+        echo          [AVISO] No se detecto la entrada. Verifica que guardaste el archivo.
+    )
 )
 echo.
 
