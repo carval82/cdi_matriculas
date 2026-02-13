@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-title CDI Matriculas - Configuración de Host Virtual
+title CDI Matriculas - Configuracion de Host Virtual
 color 0A
 
 echo ============================================================
@@ -11,9 +11,9 @@ echo.
 
 :: ─── Variables configurables ───
 set DOMAIN=cdimatriculas.local
-set PROJECT_PATH=C:\xampp\htdocs\laravel\cdi_matriculas\public
-set APACHE_CONF=C:\xampp\apache\conf\extra\httpd-vhosts.conf
-set HOSTS_FILE=C:\Windows\System32\drivers\etc\hosts
+set "PROJECT_PATH=C:\xampp\htdocs\laravel\cdi_matriculas\public"
+set "APACHE_CONF=C:\xampp\apache\conf\extra\httpd-vhosts.conf"
+set "HOSTS_FILE=C:\Windows\System32\drivers\etc\hosts"
 
 :: ─── Verificar permisos de administrador ───
 net session >nul 2>&1
@@ -34,62 +34,69 @@ echo.
 :: ─── 1. Configurar archivo hosts ───
 echo [PASO 1/3] Archivo hosts...
 findstr /C:"%DOMAIN%" "%HOSTS_FILE%" >nul 2>&1
+if %errorlevel% equ 0 goto hosts_ok
+
+echo.
+echo          Agrega esta linea al final del archivo hosts:
+echo.
+echo          127.0.0.1       %DOMAIN%
+echo.
+echo          Se abrira el Bloc de notas con el archivo hosts.
+echo          Agrega la linea al final, guarda con Ctrl+S y cierra.
+echo.
+echo          Presiona una tecla para abrir el archivo...
+pause >nul
+notepad.exe "%HOSTS_FILE%"
+echo.
+echo          Verificando...
+findstr /C:"%DOMAIN%" "%HOSTS_FILE%" >nul 2>&1
 if %errorlevel% equ 0 (
-    echo          Ya existe la entrada para %DOMAIN% en hosts. Omitiendo...
+    echo          Entrada para %DOMAIN% detectada. OK!
 ) else (
-    echo.
-    echo          Agrega esta linea al final del archivo hosts:
-    echo.
-    echo          127.0.0.1       %DOMAIN%
-    echo.
-    echo          Se abrira el Bloc de notas con el archivo hosts.
-    echo          Agrega la linea, guarda (Ctrl+S) y cierra el Bloc de notas.
-    echo.
-    pause
-    start /wait notepad.exe "%HOSTS_FILE%"
-    echo          Verificando...
-    findstr /C:"%DOMAIN%" "%HOSTS_FILE%" >nul 2>&1
-    if %errorlevel% equ 0 (
-        echo          Entrada para %DOMAIN% detectada. OK!
-    ) else (
-        echo          [AVISO] No se detecto la entrada. Verifica que guardaste el archivo.
-    )
+    echo          [AVISO] No se detecto la entrada. Verifica que guardaste.
 )
+goto hosts_done
+
+:hosts_ok
+echo          Ya existe la entrada para %DOMAIN% en hosts. OK!
+
+:hosts_done
 echo.
 
 :: ─── 2. Configurar Virtual Host en Apache ───
 echo [PASO 2/3] Configurando Virtual Host en Apache...
 findstr /C:"%DOMAIN%" "%APACHE_CONF%" >nul 2>&1
-if %errorlevel% equ 0 (
-    echo          Ya existe el VirtualHost para %DOMAIN%. Omitiendo...
-) else (
-    echo.>> "%APACHE_CONF%"
-    echo ## CDI Matriculas - Host Virtual>> "%APACHE_CONF%"
-    echo ^<VirtualHost *:80^>>> "%APACHE_CONF%"
-    echo     ServerName %DOMAIN%>> "%APACHE_CONF%"
-    echo     DocumentRoot "%PROJECT_PATH%">> "%APACHE_CONF%"
-    echo     ^<Directory "%PROJECT_PATH%"^>>> "%APACHE_CONF%"
-    echo         Options Indexes FollowSymLinks MultiViews>> "%APACHE_CONF%"
-    echo         AllowOverride All>> "%APACHE_CONF%"
-    echo         Require all granted>> "%APACHE_CONF%"
-    echo     ^</Directory^>>> "%APACHE_CONF%"
-    echo     ErrorLog "logs/cdimatriculas-error.log">> "%APACHE_CONF%"
-    echo     CustomLog "logs/cdimatriculas-access.log" common>> "%APACHE_CONF%"
-    echo ^</VirtualHost^>>> "%APACHE_CONF%"
-    echo          VirtualHost creado para %DOMAIN%
-)
+if %errorlevel% equ 0 goto vhost_ok
+
+echo.>>"%APACHE_CONF%"
+echo ## CDI Matriculas - Host Virtual>>"%APACHE_CONF%"
+echo ^<VirtualHost *:80^>>>"%APACHE_CONF%"
+echo     ServerName %DOMAIN%>>"%APACHE_CONF%"
+echo     DocumentRoot "%PROJECT_PATH%">>"%APACHE_CONF%"
+echo     ^<Directory "%PROJECT_PATH%"^>>>"%APACHE_CONF%"
+echo         Options Indexes FollowSymLinks MultiViews>>"%APACHE_CONF%"
+echo         AllowOverride All>>"%APACHE_CONF%"
+echo         Require all granted>>"%APACHE_CONF%"
+echo     ^</Directory^>>>"%APACHE_CONF%"
+echo     ErrorLog "logs/cdimatriculas-error.log">>"%APACHE_CONF%"
+echo     CustomLog "logs/cdimatriculas-access.log" common>>"%APACHE_CONF%"
+echo ^</VirtualHost^>>>"%APACHE_CONF%"
+echo          VirtualHost creado para %DOMAIN%. OK!
+goto vhost_done
+
+:vhost_ok
+echo          Ya existe el VirtualHost para %DOMAIN%. OK!
+
+:vhost_done
 echo.
 
 :: ─── 3. Reiniciar Apache ───
 echo [PASO 3/3] Reiniciando Apache...
 cd /d C:\xampp
-apache\bin\httpd.exe -k restart >nul 2>&1
-if %errorlevel% equ 0 (
-    echo          Apache reiniciado correctamente.
-) else (
-    echo          [AVISO] No se pudo reiniciar Apache automaticamente.
-    echo          Reinicia Apache manualmente desde el panel de XAMPP.
-)
+apache_stop.bat >nul 2>&1
+timeout /t 2 /nobreak >nul
+apache_start.bat >nul 2>&1
+echo          Apache reiniciado. Si no funciona, reinicia desde el panel XAMPP.
 echo.
 
 echo ============================================================
@@ -101,20 +108,6 @@ echo.
 echo   Credenciales de acceso:
 echo     Email:      pcapacho24@gmail.com
 echo     Password:   anaval33
-echo.
-echo   Si no funciona, verifica que:
-echo     1. Apache este corriendo en XAMPP
-echo     2. El modulo mod_rewrite este habilitado
-echo     3. La base de datos este creada y migrada
-echo.
-echo   Comandos de instalacion:
-echo     composer install
-echo     cp .env.example .env
-echo     php artisan key:generate
-echo     php artisan migrate
-echo     php artisan db:seed
-echo     php artisan storage:link
-echo     npm install ^&^& npm run build
 echo.
 echo ============================================================
 pause
