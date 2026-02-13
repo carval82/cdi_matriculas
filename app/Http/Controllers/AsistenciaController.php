@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class AsistenciaController extends Controller
 {
+    private function gruposPermitidos()
+    {
+        $user = Auth::user();
+        if ($user->isAdmin() || $user->isSecretaria()) {
+            return Grupo::where('activa', true)->orderBy('orden')->get();
+        }
+        $docente = $user->docente;
+        if (!$docente) return collect();
+        return $docente->gruposActuales()->orderBy('orden')->get();
+    }
+
     public function index(Request $request)
     {
-        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
+        $grupos = $this->gruposPermitidos();
         $grupoId = $request->grupo_id;
         $fecha = $request->fecha ?? now()->format('Y-m-d');
 
@@ -21,6 +32,9 @@ class AsistenciaController extends Controller
         $grupo = null;
 
         if ($grupoId) {
+            if (!$grupos->contains('id', (int) $grupoId)) {
+                abort(403, 'No tienes acceso a este grupo.');
+            }
             $grupo = Grupo::find($grupoId);
             $estudiantes = Estudiante::where('grupo_id', $grupoId)
                 ->where('estado', 'activo')
@@ -42,6 +56,12 @@ class AsistenciaController extends Controller
             'fecha' => 'required|date',
             'asistencia' => 'required|array',
         ]);
+
+        // Verificar acceso al grupo
+        $grupos = $this->gruposPermitidos();
+        if (!$grupos->contains('id', (int) $request->grupo_id)) {
+            abort(403, 'No tienes acceso a este grupo.');
+        }
 
         foreach ($request->asistencia as $estudianteId => $estado) {
             Asistencia::updateOrCreate(
@@ -66,7 +86,7 @@ class AsistenciaController extends Controller
 
     public function reporte(Request $request)
     {
-        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
+        $grupos = $this->gruposPermitidos();
         $grupoId = $request->grupo_id;
         $mes = $request->mes ?? now()->month;
         $anio = $request->anio ?? now()->year;

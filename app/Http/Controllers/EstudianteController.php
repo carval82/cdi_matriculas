@@ -6,13 +6,31 @@ use App\Models\Estudiante;
 use App\Models\Acudiente;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class EstudianteController extends Controller
 {
+    private function gruposPermitidos()
+    {
+        $user = Auth::user();
+        if ($user->isAdmin() || $user->isSecretaria()) {
+            return null; // sin restricción
+        }
+        $docente = $user->docente;
+        if (!$docente) return collect();
+        return $docente->gruposActuales()->pluck('grupos.id');
+    }
+
     public function index(Request $request)
     {
         $query = Estudiante::with(['grupo', 'acudiente']);
+
+        // Docente: solo estudiantes de sus grupos
+        $grupoIds = $this->gruposPermitidos();
+        if ($grupoIds !== null) {
+            $query->whereIn('grupo_id', $grupoIds);
+        }
 
         if ($request->filled('grupo_id')) {
             $query->where('grupo_id', $request->grupo_id);
@@ -33,7 +51,13 @@ class EstudianteController extends Controller
         }
 
         $estudiantes = $query->orderBy('apellidos')->paginate(20)->withQueryString();
-        $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
+
+        // Grupos para el filtro: docente solo ve sus grupos
+        if ($grupoIds !== null) {
+            $grupos = Grupo::whereIn('id', $grupoIds)->orderBy('orden')->get();
+        } else {
+            $grupos = Grupo::where('activa', true)->orderBy('orden')->get();
+        }
 
         return view('estudiantes.index', compact('estudiantes', 'grupos'));
     }

@@ -296,6 +296,7 @@
                     <i class="fas fa-th-large"></i> Dashboard
                 </a>
 
+                @if(auth()->user()->isAdmin() || auth()->user()->isSecretaria())
                 <div class="sidebar-section">Gestión Académica</div>
                 <a href="{{ route('grupos.index') }}" class="sidebar-link {{ request()->routeIs('grupos.*') ? 'active' : '' }}">
                     <i class="fas fa-school"></i> Grupos
@@ -309,6 +310,14 @@
                 <a href="{{ route('docentes.index') }}" class="sidebar-link {{ request()->routeIs('docentes.*') ? 'active' : '' }}">
                     <i class="fas fa-chalkboard-teacher"></i> Docentes
                 </a>
+                @endif
+
+                @if(auth()->user()->isDocente())
+                <div class="sidebar-section">Mis Grupos</div>
+                <a href="{{ route('estudiantes.index') }}" class="sidebar-link {{ request()->routeIs('estudiantes.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-graduate"></i> Estudiantes
+                </a>
+                @endif
 
                 <div class="sidebar-section">Seguimiento</div>
                 <a href="{{ route('asistencias.index') }}" class="sidebar-link {{ request()->routeIs('asistencias.index') ? 'active' : '' }}">
@@ -317,7 +326,14 @@
                 <a href="{{ route('asistencias.reporte') }}" class="sidebar-link {{ request()->routeIs('asistencias.reporte') ? 'active' : '' }}">
                     <i class="fas fa-chart-bar"></i> Reporte Asistencia
                 </a>
+                <a href="{{ route('evaluaciones.index') }}" class="sidebar-link {{ request()->routeIs('evaluaciones.index') ? 'active' : '' }}">
+                    <i class="fas fa-star"></i> Evaluaciones
+                </a>
+                <a href="{{ route('conceptos.index') }}" class="sidebar-link {{ request()->routeIs('conceptos.*') ? 'active' : '' }}">
+                    <i class="fas fa-list-alt"></i> Conceptos Evaluativos
+                </a>
 
+                @if(auth()->user()->isAdmin() || auth()->user()->isSecretaria())
                 <div class="sidebar-section">Financiero</div>
                 <a href="{{ route('matriculas.index') }}" class="sidebar-link {{ request()->routeIs('matriculas.*') ? 'active' : '' }}">
                     <i class="fas fa-file-signature"></i> Matrículas
@@ -325,16 +341,17 @@
                 <a href="{{ route('pagos.index') }}" class="sidebar-link {{ request()->routeIs('pagos.*') ? 'active' : '' }}">
                     <i class="fas fa-money-bill-wave"></i> Pagos
                 </a>
+                @endif
 
                 <div class="sidebar-section">Sistema</div>
                 @if(auth()->user()->isAdmin())
                 <a href="{{ route('users.index') }}" class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                     <i class="fas fa-users-cog"></i> Usuarios
                 </a>
-                @endif
                 <a href="{{ route('establecimiento.edit') }}" class="sidebar-link {{ request()->routeIs('establecimiento.*') ? 'active' : '' }}">
                     <i class="fas fa-building"></i> Establecimiento
                 </a>
+                @endif
                 <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                     <i class="fas fa-user-cog"></i> Mi Perfil
                 </a>
@@ -350,7 +367,7 @@
                     </div>
                     <div class="sidebar-user-info">
                         <div class="sidebar-user-name">{{ Auth::user()->name }}</div>
-                        <div class="sidebar-user-role">Administrador</div>
+                        <div class="sidebar-user-role">{{ ucfirst(Auth::user()->role) }}</div>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
