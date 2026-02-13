@@ -37,7 +37,10 @@ class GrupoController extends Controller
 
     public function show(Grupo $grupo)
     {
-        $grupo->load(['estudiantes' => fn($q) => $q->where('estado', 'activo')->with('acudiente')]);
+        $grupo->load([
+            'estudiantes' => fn($q) => $q->where('estado', 'activo')->with('acudiente'),
+            'docentesActuales',
+        ]);
 
         return view('grupos.show', compact('grupo'));
     }

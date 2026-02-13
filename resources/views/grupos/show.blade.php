@@ -19,6 +19,29 @@
                 @endif
             </div>
 
+            @if($grupo->docentesActuales->count())
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3"><i class="fas fa-chalkboard-teacher text-indigo-500 mr-1"></i> Docentes Asignados ({{ date('Y') }})</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    @foreach($grupo->docentesActuales as $doc)
+                        <a href="{{ route('docentes.show', $doc) }}" class="flex items-center gap-3 p-3 border rounded-lg hover:bg-indigo-50 transition">
+                            @if($doc->foto)
+                                <img src="{{ asset('storage/' . $doc->foto) }}" class="h-10 w-10 rounded-full object-cover">
+                            @else
+                                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
+                                    {{ strtoupper(substr($doc->nombres, 0, 1) . substr($doc->apellidos, 0, 1)) }}
+                                </div>
+                            @endif
+                            <div>
+                                <div class="font-medium text-sm">{{ $doc->nombre_completo }}</div>
+                                <div class="text-xs text-gray-500">{{ ucfirst($doc->pivot->rol) }} — {{ $doc->especialidad ?? '' }}</div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800">Estudiantes Activos ({{ $grupo->estudiantes->count() }})</h3>

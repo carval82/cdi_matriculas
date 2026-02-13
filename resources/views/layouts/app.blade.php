@@ -306,6 +306,17 @@
                 <a href="{{ route('acudientes.index') }}" class="sidebar-link {{ request()->routeIs('acudientes.*') ? 'active' : '' }}">
                     <i class="fas fa-users"></i> Acudientes
                 </a>
+                <a href="{{ route('docentes.index') }}" class="sidebar-link {{ request()->routeIs('docentes.*') ? 'active' : '' }}">
+                    <i class="fas fa-chalkboard-teacher"></i> Docentes
+                </a>
+
+                <div class="sidebar-section">Seguimiento</div>
+                <a href="{{ route('asistencias.index') }}" class="sidebar-link {{ request()->routeIs('asistencias.index') ? 'active' : '' }}">
+                    <i class="fas fa-clipboard-check"></i> Asistencia
+                </a>
+                <a href="{{ route('asistencias.reporte') }}" class="sidebar-link {{ request()->routeIs('asistencias.reporte') ? 'active' : '' }}">
+                    <i class="fas fa-chart-bar"></i> Reporte Asistencia
+                </a>
 
                 <div class="sidebar-section">Financiero</div>
                 <a href="{{ route('matriculas.index') }}" class="sidebar-link {{ request()->routeIs('matriculas.*') ? 'active' : '' }}">

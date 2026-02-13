@@ -36,6 +36,23 @@ class Grupo extends Model
         return $this->estudiantes()->where('estado', 'activo');
     }
 
+    public function docentes()
+    {
+        return $this->belongsToMany(Docente::class, 'docente_grupo')
+            ->withPivot('rol', 'anio')
+            ->withTimestamps();
+    }
+
+    public function docentesActuales()
+    {
+        return $this->docentes()->wherePivot('anio', date('Y'));
+    }
+
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
+
     public function cuposDisponibles(): int
     {
         return $this->capacidad - $this->estudiantesActivos()->count();
