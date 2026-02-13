@@ -38,14 +38,17 @@
             }
             .login-card {
                 backdrop-filter: blur(20px);
-                background: rgba(255, 255, 255, 0.95);
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.97);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
+                max-width: 420px;
+                margin: 0 auto;
             }
             .login-input {
                 transition: all 0.3s ease;
                 border: 2px solid #e5e7eb;
                 border-radius: 12px;
-                padding: 12px 16px 12px 44px;
+                padding: 14px 16px 14px 46px;
                 font-size: 0.95rem;
                 width: 100%;
                 outline: none;
@@ -54,28 +57,30 @@
             .login-input:focus {
                 border-color: #6366f1;
                 background: #fff;
-                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
             }
             .login-btn {
-                background: linear-gradient(135deg, #4f46e5, #6366f1);
+                background: linear-gradient(135deg, #4f46e5, #7c3aed);
                 border: none;
                 border-radius: 12px;
-                padding: 13px 24px;
+                padding: 14px 24px;
                 color: #fff;
                 font-weight: 700;
-                font-size: 0.95rem;
+                font-size: 1rem;
                 width: 100%;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 letter-spacing: 0.5px;
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
             }
             .login-btn:hover {
-                background: linear-gradient(135deg, #4338ca, #4f46e5);
-                box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
-                transform: translateY(-1px);
+                background: linear-gradient(135deg, #4338ca, #6d28d9);
+                box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+                transform: translateY(-2px);
             }
             .login-btn:active {
                 transform: translateY(0);
+                box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
             }
             .input-icon {
                 position: absolute;
