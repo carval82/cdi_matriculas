@@ -124,7 +124,7 @@ echo   Para configurar el host virtual ejecuta:
 echo     scripts\setup-vhost.bat (como Administrador)
 echo.
 echo   O accede directamente en:
-echo     http://localhost/laravel/cdi_matriculas/public
+echo     http://cdimatriculas.local
 echo.
 echo ============================================================
 pause

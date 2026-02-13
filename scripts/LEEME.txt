@@ -26,7 +26,7 @@ OPCION 1: INSTALACION AUTOMATICA
      scripts\setup-vhost.bat
 
   4. Acceder al sistema:
-     http://cdimatriculas.test
+     http://cdimatriculas.local
 
 ============================================================
 OPCION 2: INSTALACION MANUAL
@@ -73,16 +73,16 @@ OPCION 2: INSTALACION MANUAL
 HOST VIRTUAL (OPCIONAL)
 ============================================================
 
-  Para acceder con un dominio personalizado (ej: cdimatriculas.test):
+  Para acceder con un dominio personalizado (ej: cdimatriculas.local):
 
   1. Editar C:\Windows\System32\drivers\etc\hosts (como Admin):
-     Agregar: 127.0.0.1    cdimatriculas.test
+     Agregar: 127.0.0.1    cdimatriculas.local
 
   2. Editar C:\xampp\apache\conf\extra\httpd-vhosts.conf:
      Agregar al final:
 
      <VirtualHost *:80>
-         ServerName cdimatriculas.test
+         ServerName cdimatriculas.local
          DocumentRoot "C:\xampp\htdocs\laravel\cdi_matriculas\public"
          <Directory "C:\xampp\htdocs\laravel\cdi_matriculas\public">
              Options Indexes FollowSymLinks MultiViews

@@ -10,7 +10,7 @@ echo ============================================================
 echo.
 
 :: ─── Variables configurables ───
-set DOMAIN=cdimatriculas.test
+set DOMAIN=cdimatriculas.local
 set PROJECT_PATH=C:\xampp\htdocs\laravel\cdi_matriculas\public
 set APACHE_CONF=C:\xampp\apache\conf\extra\httpd-vhosts.conf
 set HOSTS_FILE=C:\Windows\System32\drivers\etc\hosts
