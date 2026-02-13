@@ -120,15 +120,25 @@
                         <i class="fas fa-laptop-code text-indigo-500"></i> Desarrollado con
                     </h2>
                     <div class="mt-4 space-y-4">
-                        <div class="flex items-center gap-4 p-5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                        <div class="flex items-center gap-5 p-5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
                             <img src="{{ asset('image/logo-icon.png') }}" alt="LC Design" class="w-16 h-16 object-contain flex-shrink-0">
-                            <div>
-                                <div class="font-bold text-gray-800 text-lg">LC Design</div>
-                                <div class="text-gray-500 text-sm">Desarrollo de Software</div>
-                                <div class="flex items-center gap-4 mt-2">
-                                    <a href="https://github.com/carval82" target="_blank" class="text-gray-400 hover:text-gray-700 transition">
-                                        <i class="fab fa-github text-lg"></i>
+                            <div class="flex-1">
+                                <div class="font-bold text-gray-800 text-lg">LUIS CARLOS CORREA ARRIETA</div>
+                                <div class="text-indigo-600 text-sm font-medium">Analista y Desarrollador de Software</div>
+                                <div class="text-gray-500 text-xs mt-1">Graduado del SENA</div>
+                                <div class="flex flex-wrap items-center gap-4 mt-3 text-sm">
+                                    <a href="tel:3012481020" class="inline-flex items-center gap-1.5 text-gray-500 hover:text-indigo-600 transition">
+                                        <i class="fas fa-phone-alt text-xs"></i> 301 248 1020
                                     </a>
+                                    <a href="mailto:contacto@lcdesign.com.co" class="inline-flex items-center gap-1.5 text-gray-500 hover:text-indigo-600 transition">
+                                        <i class="fas fa-envelope text-xs"></i> contacto@lcdesign.com.co
+                                    </a>
+                                    <a href="https://github.com/carval82" target="_blank" class="inline-flex items-center gap-1.5 text-gray-500 hover:text-gray-700 transition">
+                                        <i class="fab fa-github text-xs"></i> GitHub
+                                    </a>
+                                </div>
+                                <div class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-building text-[10px]"></i> LC Design — Desarrollo de Software
                                 </div>
                             </div>
                         </div>
