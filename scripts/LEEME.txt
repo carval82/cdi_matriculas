@@ -75,8 +75,13 @@ HOST VIRTUAL (OPCIONAL)
 
   Para acceder con un dominio personalizado (ej: cdimatriculas.local):
 
-  1. Editar C:\Windows\System32\drivers\etc\hosts (como Admin):
-     Agregar: 127.0.0.1    cdimatriculas.local
+  1. Abrir Bloc de notas como ADMINISTRADOR:
+     - Buscar "Bloc de notas" en el menu Inicio
+     - Clic derecho → "Ejecutar como administrador"
+     - Archivo → Abrir → C:\Windows\System32\drivers\etc\hosts
+       (cambiar filtro a "Todos los archivos")
+     - Agregar al final: 127.0.0.1    cdimatriculas.local
+     - Guardar y cerrar
 
   2. Editar C:\xampp\apache\conf\extra\httpd-vhosts.conf:
      Agregar al final:

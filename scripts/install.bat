@@ -120,11 +120,12 @@ echo     Email:      pcapacho24@gmail.com
 echo     Password:   anaval33
 echo     Rol:        Administrador
 echo.
-echo   Para configurar el host virtual ejecuta:
-echo     scripts\setup-vhost.bat (como Administrador)
+echo   Para configurar el host virtual:
+echo     1. Clic derecho en setup-vhost.bat
+echo     2. Seleccionar "Ejecutar como administrador"
+echo     (Requiere permisos de admin para editar el archivo hosts)
 echo.
-echo   O accede directamente en:
-echo     http://cdimatriculas.local
+echo   Luego accede en: http://cdimatriculas.local
 echo.
 echo ============================================================
 pause
