@@ -30,6 +30,11 @@
                             <div><span class="text-gray-500">Género:</span><br><span class="font-medium">{{ ucfirst($estudiante->genero) }}</span></div>
                             <div><span class="text-gray-500">RH:</span><br><span class="font-medium">{{ $estudiante->rh ?? '-' }}</span></div>
                             <div><span class="text-gray-500">EPS:</span><br><span class="font-medium">{{ $estudiante->eps ?? '-' }}</span></div>
+                            <div><span class="text-gray-500">Tipo EPS:</span><br><span class="font-medium">{{ $estudiante->tipo_eps ? ucfirst(str_replace('_', ' ', $estudiante->tipo_eps)) : '-' }}</span></div>
+                            <div><span class="text-gray-500">Nacionalidad:</span><br><span class="font-medium">{{ $estudiante->nacionalidad ?? 'Colombiana' }}</span></div>
+                            @if($estudiante->pais_origen)
+                            <div><span class="text-gray-500">País Origen:</span><br><span class="font-medium">{{ $estudiante->pais_origen }}</span></div>
+                            @endif
                             <div><span class="text-gray-500">Grupo:</span><br><span class="font-medium">{{ $estudiante->grupo?->nombre ?? 'Sin asignar' }}</span></div>
                             <div><span class="text-gray-500">Estado:</span><br>
                                 <span class="px-2 py-0.5 text-xs rounded-full {{ $estudiante->estado === 'activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ ucfirst($estudiante->estado) }}</span>
@@ -41,18 +46,45 @@
             </div>
 
             <!-- Info médica -->
-            @if($estudiante->alergias || $estudiante->condiciones_medicas || $estudiante->medicamentos)
+            @if($estudiante->alergias || $estudiante->condiciones_medicas || $estudiante->medicamentos || $estudiante->diagnostico_medico || $estudiante->condicion_especial_salud)
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-3">Información Médica</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-3"><i class="fas fa-heartbeat text-red-500 mr-1"></i> Información Médica</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     @if($estudiante->alergias)
                         <div><span class="text-gray-500">Alergias:</span><p class="mt-1">{{ $estudiante->alergias }}</p></div>
                     @endif
                     @if($estudiante->condiciones_medicas)
-                        <div><span class="text-gray-500">Condiciones:</span><p class="mt-1">{{ $estudiante->condiciones_medicas }}</p></div>
+                        <div><span class="text-gray-500">Condiciones Médicas:</span><p class="mt-1">{{ $estudiante->condiciones_medicas }}</p></div>
                     @endif
                     @if($estudiante->medicamentos)
                         <div><span class="text-gray-500">Medicamentos:</span><p class="mt-1">{{ $estudiante->medicamentos }}</p></div>
+                    @endif
+                    @if($estudiante->diagnostico_medico)
+                        <div><span class="text-gray-500">Diagnóstico Médico:</span><p class="mt-1">{{ $estudiante->diagnostico_medico }}</p></div>
+                    @endif
+                    @if($estudiante->condicion_especial_salud)
+                        <div><span class="text-gray-500">Condición Especial de Salud:</span><p class="mt-1">{{ $estudiante->condicion_especial_salud }}</p></div>
+                    @endif
+                </div>
+            </div>
+            @endif
+
+            <!-- Info socioeconómica -->
+            @if($estudiante->tiene_sisben || $estudiante->estrato || $estudiante->tiene_discapacidad || $estudiante->tipo_poblacion)
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3"><i class="fas fa-hand-holding-heart text-purple-500 mr-1"></i> Información Socioeconómica</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    @if($estudiante->estrato)
+                        <div><span class="text-gray-500">Estrato:</span><br><span class="font-medium">{{ $estudiante->estrato }}</span></div>
+                    @endif
+                    @if($estudiante->tiene_sisben)
+                        <div><span class="text-gray-500">SISBEN:</span><br><span class="font-medium">Sí — Grupo {{ $estudiante->grupo_sisben ?? 'N/A' }}</span></div>
+                    @endif
+                    @if($estudiante->tiene_discapacidad)
+                        <div><span class="text-gray-500">Discapacidad:</span><br><span class="font-medium">{{ ucfirst(str_replace('_', ' ', $estudiante->tipo_discapacidad ?? 'Sí')) }}</span></div>
+                    @endif
+                    @if($estudiante->tipo_poblacion)
+                        <div><span class="text-gray-500">Población:</span><br><span class="font-medium">{{ ucfirst(str_replace('_', ' ', $estudiante->tipo_poblacion)) }}</span></div>
                     @endif
                 </div>
             </div>

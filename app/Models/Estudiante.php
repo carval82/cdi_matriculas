@@ -13,7 +13,11 @@ class Estudiante extends Model
 
     protected $fillable = [
         'codigo', 'tipo_documento', 'documento', 'nombres', 'apellidos',
-        'fecha_nacimiento', 'lugar_nacimiento', 'genero', 'rh', 'eps',
+        'fecha_nacimiento', 'lugar_nacimiento', 'nacionalidad', 'pais_origen',
+        'genero', 'rh', 'eps', 'tipo_eps',
+        'tiene_sisben', 'grupo_sisben',
+        'tiene_discapacidad', 'tipo_discapacidad', 'diagnostico_medico',
+        'tipo_poblacion', 'estrato', 'condicion_especial_salud',
         'foto', 'alergias', 'condiciones_medicas', 'medicamentos',
         'contacto_emergencia', 'telefono_emergencia',
         'acudiente_id', 'acudiente_secundario_id', 'grupo_id',

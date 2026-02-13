@@ -176,9 +176,14 @@
                         <div>
                             <label class="lbl">Tipo Doc.</label>
                             <select name="est_tipo_documento" class="inp">
-                                <option value="TI" {{ old('est_tipo_documento') == 'TI' ? 'selected' : '' }}>TI</option>
-                                <option value="RC" {{ old('est_tipo_documento') == 'RC' ? 'selected' : '' }}>RC</option>
+                                <option value="RC" {{ old('est_tipo_documento', 'RC') == 'RC' ? 'selected' : '' }}>Registro Civil</option>
+                                <option value="TI" {{ old('est_tipo_documento') == 'TI' ? 'selected' : '' }}>Tarjeta de Identidad</option>
                                 <option value="NUIP" {{ old('est_tipo_documento') == 'NUIP' ? 'selected' : '' }}>NUIP</option>
+                                <option value="PEP" {{ old('est_tipo_documento') == 'PEP' ? 'selected' : '' }}>PEP</option>
+                                <option value="PPT" {{ old('est_tipo_documento') == 'PPT' ? 'selected' : '' }}>PPT</option>
+                                <option value="CE" {{ old('est_tipo_documento') == 'CE' ? 'selected' : '' }}>Cédula Extranjería</option>
+                                <option value="PA" {{ old('est_tipo_documento') == 'PA' ? 'selected' : '' }}>Pasaporte</option>
+                                <option value="SD" {{ old('est_tipo_documento') == 'SD' ? 'selected' : '' }}>Sin Documento</option>
                             </select>
                         </div>
                         <div>
@@ -197,6 +202,106 @@
                         <div>
                             <label class="lbl">EPS</label>
                             <input type="text" name="est_eps" class="inp" value="{{ old('est_eps') }}">
+                        </div>
+                        <div>
+                            <label class="lbl">Tipo Afiliación EPS</label>
+                            <select name="est_tipo_eps" class="inp">
+                                <option value="">Seleccionar</option>
+                                <option value="contributivo" {{ old('est_tipo_eps') == 'contributivo' ? 'selected' : '' }}>Contributivo</option>
+                                <option value="subsidiado" {{ old('est_tipo_eps') == 'subsidiado' ? 'selected' : '' }}>Subsidiado</option>
+                                <option value="beneficiario" {{ old('est_tipo_eps') == 'beneficiario' ? 'selected' : '' }}>Beneficiario</option>
+                                <option value="regimen_especial" {{ old('est_tipo_eps') == 'regimen_especial' ? 'selected' : '' }}>Régimen Especial</option>
+                                <option value="no_afiliado" {{ old('est_tipo_eps') == 'no_afiliado' ? 'selected' : '' }}>No Afiliado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">Nacionalidad</label>
+                            <select name="est_nacionalidad" class="inp">
+                                <option value="Colombiana" {{ old('est_nacionalidad', 'Colombiana') == 'Colombiana' ? 'selected' : '' }}>Colombiana</option>
+                                <option value="Venezolana" {{ old('est_nacionalidad') == 'Venezolana' ? 'selected' : '' }}>Venezolana</option>
+                                <option value="Ecuatoriana" {{ old('est_nacionalidad') == 'Ecuatoriana' ? 'selected' : '' }}>Ecuatoriana</option>
+                                <option value="Peruana" {{ old('est_nacionalidad') == 'Peruana' ? 'selected' : '' }}>Peruana</option>
+                                <option value="Haitiana" {{ old('est_nacionalidad') == 'Haitiana' ? 'selected' : '' }}>Haitiana</option>
+                                <option value="Otra" {{ old('est_nacionalidad') == 'Otra' ? 'selected' : '' }}>Otra</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">País de Origen (si extranjero)</label>
+                            <input type="text" name="est_pais_origen" class="inp" value="{{ old('est_pais_origen') }}" placeholder="Ej: Venezuela">
+                        </div>
+
+                        <div class="full" style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:4px;">
+                            <label class="lbl" style="color:#6366f1;"><i class="fas fa-hand-holding-heart"></i> Información Socioeconómica</label>
+                        </div>
+                        <div>
+                            <label class="lbl">¿Tiene SISBEN?</label>
+                            <select name="est_tiene_sisben" class="inp" onchange="document.getElementById('div_est_grupo_sisben').style.display = this.value == '1' ? 'block' : 'none'">
+                                <option value="0" {{ old('est_tiene_sisben') == '0' ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ old('est_tiene_sisben') == '1' ? 'selected' : '' }}>Sí</option>
+                            </select>
+                        </div>
+                        <div id="div_est_grupo_sisben" style="{{ old('est_tiene_sisben') == '1' ? '' : 'display:none' }}">
+                            <label class="lbl">Grupo SISBEN</label>
+                            <select name="est_grupo_sisben" class="inp">
+                                <option value="">Seleccionar</option>
+                                @foreach(['A1','A2','A3','A4','A5','B1','B2','B3','B4','B5','B6','B7','C1','C2','C3','C4','C5','C6','C7','C8','C9','C10','C11','C12','C13','C14','C15','C16','C17','C18','D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13','D14','D15','D16','D17','D18','D19','D20','D21'] as $gs)
+                                    <option value="{{ $gs }}" {{ old('est_grupo_sisben') == $gs ? 'selected' : '' }}>{{ $gs }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">Estrato</label>
+                            <select name="est_estrato" class="inp">
+                                <option value="">Seleccionar</option>
+                                @for($i = 1; $i <= 6; $i++)
+                                    <option value="{{ $i }}" {{ old('est_estrato') == $i ? 'selected' : '' }}>Estrato {{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">¿Tiene Discapacidad?</label>
+                            <select name="est_tiene_discapacidad" class="inp" onchange="document.getElementById('div_est_tipo_disc').style.display = this.value == '1' ? 'block' : 'none'">
+                                <option value="0" {{ old('est_tiene_discapacidad') == '0' ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ old('est_tiene_discapacidad') == '1' ? 'selected' : '' }}>Sí</option>
+                            </select>
+                        </div>
+                        <div id="div_est_tipo_disc" style="{{ old('est_tiene_discapacidad') == '1' ? '' : 'display:none' }}">
+                            <label class="lbl">Tipo de Discapacidad</label>
+                            <select name="est_tipo_discapacidad" class="inp">
+                                <option value="">Seleccionar</option>
+                                <option value="fisica" {{ old('est_tipo_discapacidad') == 'fisica' ? 'selected' : '' }}>Física</option>
+                                <option value="cognitiva" {{ old('est_tipo_discapacidad') == 'cognitiva' ? 'selected' : '' }}>Cognitiva / Intelectual</option>
+                                <option value="sensorial_visual" {{ old('est_tipo_discapacidad') == 'sensorial_visual' ? 'selected' : '' }}>Sensorial Visual</option>
+                                <option value="sensorial_auditiva" {{ old('est_tipo_discapacidad') == 'sensorial_auditiva' ? 'selected' : '' }}>Sensorial Auditiva</option>
+                                <option value="psicosocial" {{ old('est_tipo_discapacidad') == 'psicosocial' ? 'selected' : '' }}>Psicosocial</option>
+                                <option value="multiple" {{ old('est_tipo_discapacidad') == 'multiple' ? 'selected' : '' }}>Múltiple</option>
+                                <option value="trastorno_espectro_autista" {{ old('est_tipo_discapacidad') == 'trastorno_espectro_autista' ? 'selected' : '' }}>Trastorno del Espectro Autista</option>
+                                <option value="sindrome_down" {{ old('est_tipo_discapacidad') == 'sindrome_down' ? 'selected' : '' }}>Síndrome de Down</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">Tipo de Población</label>
+                            <select name="est_tipo_poblacion" class="inp">
+                                <option value="">Ninguna / No aplica</option>
+                                <option value="victima_conflicto" {{ old('est_tipo_poblacion') == 'victima_conflicto' ? 'selected' : '' }}>Víctima del Conflicto</option>
+                                <option value="desplazado" {{ old('est_tipo_poblacion') == 'desplazado' ? 'selected' : '' }}>Desplazado</option>
+                                <option value="indigena" {{ old('est_tipo_poblacion') == 'indigena' ? 'selected' : '' }}>Indígena</option>
+                                <option value="afrocolombiano" {{ old('est_tipo_poblacion') == 'afrocolombiano' ? 'selected' : '' }}>Afrocolombiano</option>
+                                <option value="raizal" {{ old('est_tipo_poblacion') == 'raizal' ? 'selected' : '' }}>Raizal</option>
+                                <option value="palenquero" {{ old('est_tipo_poblacion') == 'palenquero' ? 'selected' : '' }}>Palenquero</option>
+                                <option value="rom_gitano" {{ old('est_tipo_poblacion') == 'rom_gitano' ? 'selected' : '' }}>Rom / Gitano</option>
+                                <option value="migrante" {{ old('est_tipo_poblacion') == 'migrante' ? 'selected' : '' }}>Migrante</option>
+                                <option value="reincorporado" {{ old('est_tipo_poblacion') == 'reincorporado' ? 'selected' : '' }}>Reincorporado</option>
+                                <option value="cabeza_de_hogar" {{ old('est_tipo_poblacion') == 'cabeza_de_hogar' ? 'selected' : '' }}>Hijo Cabeza de Hogar</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="lbl">Diagnóstico Médico</label>
+                            <input type="text" name="est_diagnostico_medico" class="inp" value="{{ old('est_diagnostico_medico') }}" placeholder="Si aplica">
+                        </div>
+                        <div>
+                            <label class="lbl">Condición Especial de Salud</label>
+                            <input type="text" name="est_condicion_especial_salud" class="inp" value="{{ old('est_condicion_especial_salud') }}" placeholder="Ej: Asma, epilepsia...">
                         </div>
                     </div>
                 </div>
