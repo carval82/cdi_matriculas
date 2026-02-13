@@ -12,6 +12,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\EvaluacionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BackupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +38,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('users', UserController::class)->except(['show']);
         Route::get('/establecimiento', [EstablecimientoController::class, 'edit'])->name('establecimiento.edit');
         Route::put('/establecimiento', [EstablecimientoController::class, 'update'])->name('establecimiento.update');
+        Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+        Route::post('/backup', [BackupController::class, 'backup'])->name('backup.create');
+        Route::post('/backup/restore', [BackupController::class, 'restore'])->name('backup.restore');
+        Route::get('/backup/download/{filename}', [BackupController::class, 'download'])->name('backup.download');
+        Route::delete('/backup/{filename}', [BackupController::class, 'destroy'])->name('backup.destroy');
     });
 
     // ─── Todos los autenticados (admin, secretaria, docente) ───

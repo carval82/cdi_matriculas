@@ -351,6 +351,9 @@
                 <a href="{{ route('establecimiento.edit') }}" class="sidebar-link {{ request()->routeIs('establecimiento.*') ? 'active' : '' }}">
                     <i class="fas fa-building"></i> Establecimiento
                 </a>
+                <a href="{{ route('backup.index') }}" class="sidebar-link {{ request()->routeIs('backup.*') ? 'active' : '' }}">
+                    <i class="fas fa-database"></i> Backup / Restaurar
+                </a>
                 @endif
                 <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                     <i class="fas fa-user-cog"></i> Mi Perfil
