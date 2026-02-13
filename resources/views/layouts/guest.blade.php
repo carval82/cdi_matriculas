@@ -5,24 +5,110 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'CDI Matrículas') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            .login-bg {
+                background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4338ca 60%, #6366f1 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .login-bg::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                            radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                            radial-gradient(ellipse at 50% 80%, rgba(79, 70, 229, 0.1) 0%, transparent 50%);
+                animation: float 20s ease-in-out infinite;
+            }
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                33% { transform: translate(2%, -2%) rotate(1deg); }
+                66% { transform: translate(-1%, 1%) rotate(-1deg); }
+            }
+            .login-card {
+                backdrop-filter: blur(20px);
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .login-input {
+                transition: all 0.3s ease;
+                border: 2px solid #e5e7eb;
+                border-radius: 12px;
+                padding: 12px 16px 12px 44px;
+                font-size: 0.95rem;
+                width: 100%;
+                outline: none;
+                background: #f9fafb;
+            }
+            .login-input:focus {
+                border-color: #6366f1;
+                background: #fff;
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            }
+            .login-btn {
+                background: linear-gradient(135deg, #4f46e5, #6366f1);
+                border: none;
+                border-radius: 12px;
+                padding: 13px 24px;
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.95rem;
+                width: 100%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                letter-spacing: 0.5px;
+            }
+            .login-btn:hover {
+                background: linear-gradient(135deg, #4338ca, #4f46e5);
+                box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+                transform: translateY(-1px);
+            }
+            .login-btn:active {
+                transform: translateY(0);
+            }
+            .input-icon {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #9ca3af;
+                font-size: 0.9rem;
+                transition: color 0.3s;
+            }
+            .input-group:focus-within .input-icon {
+                color: #6366f1;
+            }
+            .bubble {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.03);
+                animation: rise 15s ease-in-out infinite;
+            }
+            @keyframes rise {
+                0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+                50% { transform: translateY(-30px) scale(1.1); opacity: 0.8; }
+            }
+        </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+        <div class="login-bg min-h-screen flex items-center justify-center p-4">
+            <!-- Decorative bubbles -->
+            <div class="bubble" style="width:300px;height:300px;top:10%;left:-5%;animation-delay:0s;"></div>
+            <div class="bubble" style="width:200px;height:200px;bottom:10%;right:-3%;animation-delay:5s;"></div>
+            <div class="bubble" style="width:150px;height:150px;top:60%;left:50%;animation-delay:10s;"></div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="relative z-10 w-full max-w-md">
                 {{ $slot }}
             </div>
         </div>

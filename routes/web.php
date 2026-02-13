@@ -10,6 +10,7 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/establecimiento', [EstablecimientoController::class, 'edit'])->name('establecimiento.edit');
     Route::put('/establecimiento', [EstablecimientoController::class, 'update'])->name('establecimiento.update');
+
+    Route::resource('users', UserController::class)->except(['show'])->middleware('role:admin');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

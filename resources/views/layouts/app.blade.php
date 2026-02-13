@@ -327,6 +327,11 @@
                 </a>
 
                 <div class="sidebar-section">Sistema</div>
+                @if(auth()->user()->isAdmin())
+                <a href="{{ route('users.index') }}" class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <i class="fas fa-users-cog"></i> Usuarios
+                </a>
+                @endif
                 <a href="{{ route('establecimiento.edit') }}" class="sidebar-link {{ request()->routeIs('establecimiento.*') ? 'active' : '' }}">
                     <i class="fas fa-building"></i> Establecimiento
                 </a>
