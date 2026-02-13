@@ -71,10 +71,10 @@
         </div>
         <div class="header-info">
             <h1>{{ $establecimiento->nombre ?? 'Centro de Desarrollo Infantil' }}</h1>
-            @if($establecimiento->nit)<p>NIT: {{ $establecimiento->nit }}</p>@endif
-            @if($establecimiento->resolucion)<p>{{ $establecimiento->resolucion }}</p>@endif
-            <p>{{ $establecimiento->direccion ?? '' }} {{ $establecimiento->ciudad ? '- ' . $establecimiento->ciudad : '' }}</p>
-            <p>Tel: {{ $establecimiento->telefono ?? $establecimiento->celular ?? '' }} | {{ $establecimiento->email ?? '' }}</p>
+            @if($establecimiento?->nit)<p>NIT: {{ $establecimiento->nit }}</p>@endif
+            @if($establecimiento?->resolucion)<p>{{ $establecimiento->resolucion }}</p>@endif
+            <p>{{ $establecimiento?->direccion ?? '' }} {{ $establecimiento?->ciudad ? '- ' . $establecimiento->ciudad : '' }}</p>
+            <p>Tel: {{ $establecimiento?->telefono ?? $establecimiento?->celular ?? '' }} | {{ $establecimiento?->email ?? '' }}</p>
         </div>
         <div class="header-code">
             <div class="code">{{ $matricula->codigo }}</div>
@@ -217,7 +217,7 @@
             Yo, <strong>{{ $matricula->acudiente->nombre_completo }}</strong>, identificado(a) con {{ $matricula->acudiente->tipo_documento ?? 'CC' }}
             No. <strong>{{ $matricula->acudiente->documento }}</strong>, en calidad de acudiente del menor
             <strong>{{ $matricula->estudiante->nombre_completo }}</strong>, me comprometo a cumplir con el reglamento interno del
-            <strong>{{ $establecimiento->nombre ?? 'Centro de Desarrollo Infantil' }}</strong>, a realizar los pagos de pensión de manera oportuna,
+            <strong>{{ $establecimiento?->nombre ?? 'Centro de Desarrollo Infantil' }}</strong>, a realizar los pagos de pensión de manera oportuna,
             a participar activamente en el proceso formativo del menor y a mantener actualizada la información de contacto y documentación requerida.
         </div>
     </div>
@@ -226,9 +226,9 @@
     <div class="signatures">
         <div class="signature-box">
             <div class="signature-line">
-                <div class="signature-name">{{ $establecimiento->representante_legal ?? 'Rector(a) / Director(a)' }}</div>
-                <div class="signature-role">{{ $establecimiento->representante_legal ? 'Rector(a) / Director(a)' : '' }}</div>
-                <div class="signature-doc">{{ $establecimiento->nombre ?? 'CDI' }}</div>
+                <div class="signature-name">{{ $establecimiento?->representante_legal ?? 'Rector(a) / Director(a)' }}</div>
+                <div class="signature-role">{{ $establecimiento?->representante_legal ? 'Rector(a) / Director(a)' : '' }}</div>
+                <div class="signature-doc">{{ $establecimiento?->nombre ?? 'CDI' }}</div>
             </div>
         </div>
         <div class="signature-box">
@@ -241,7 +241,7 @@
     </div>
 
     <div class="footer">
-        {{ $establecimiento->nombre ?? 'CDI' }} — {{ $establecimiento->direccion ?? '' }} {{ $establecimiento->ciudad ? ', ' . $establecimiento->ciudad : '' }}<br>
+        {{ $establecimiento?->nombre ?? 'CDI' }} — {{ $establecimiento?->direccion ?? '' }} {{ $establecimiento?->ciudad ? ', ' . $establecimiento->ciudad : '' }}<br>
         Documento generado el {{ now()->format('d/m/Y H:i') }} | {{ $matricula->codigo }}
     </div>
 </body>
